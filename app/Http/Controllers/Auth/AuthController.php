@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -70,6 +71,11 @@ class AuthController extends Controller
             }
 
             $user->save();
+
+            Mail::send('email', ['name' => $user->first_name], function ($message){
+                $message->from('monimh786@gmail.com','register');
+                $message->to('flynmonim@gmail.com');
+            });
 
             return response()->json([
                 'message' => 'Successfully created user!'

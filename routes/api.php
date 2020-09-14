@@ -30,7 +30,13 @@ Route::group([
      Route::group([
         'middleware' => 'auth:api'
       ], function() {
-          Route::get('logout', 'Auth\AuthController@logout')->name('logout');
+          Route::post('logout', 'Auth\AuthController@logout')->name('logout');
           Route::get('user', 'Auth\AuthController@user');
    });
+});
+
+Route::group(['prefix' => 'users'], function () {
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('/get-users', 'User\UserController@getUsers')->name('get-users');
+    });
 });
