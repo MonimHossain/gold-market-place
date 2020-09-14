@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistrationMail;
+use App\Mail\ForgotPassword;
+use App\Mail\ResetPassword;
+
+
 
 class AuthController extends Controller
 {
@@ -29,9 +34,10 @@ class AuthController extends Controller
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-
+        
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
+        
         $token->save();
 
         return response()->json([
@@ -57,8 +63,8 @@ class AuthController extends Controller
             ]);
 
             $user = new User;
-            $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
+            $user->first_name = strtolower($request->first_name);
+            $user->last_name = strtolower($request->last_name);
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->phone = $request->phone;
@@ -72,10 +78,7 @@ class AuthController extends Controller
 
             $user->save();
 
-            Mail::send('email', ['name' => $user->first_name], function ($message){
-                $message->from('monimh786@gmail.com','register');
-                $message->to('flynmonim@gmail.com');
-            });
+            Mail::to('monimh786@gmail.com')->send(new RegistrationMail());
 
             return response()->json([
                 'message' => 'Successfully created user!'
@@ -213,4 +216,38 @@ class AuthController extends Controller
         return response()->json($request->user());
     }
 
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+        ]);
+
+        Mail::to('monimh786@gmail.com')->send(new ForgotPassword());
+
+        return response()->json([
+            'message' => 'Successfully sent code to email!'
+        ], 201);
+        
+        
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        Mail::to('monimh786@gmail.com')->send(new ResetPassword());
+        
+        return response()->json([
+            'message' => 'Successfully reset password!'
+        ], 201);
+        
+        
+    }
 }

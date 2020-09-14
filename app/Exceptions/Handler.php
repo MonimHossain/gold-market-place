@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -33,5 +34,17 @@ class Handler extends ExceptionHandler
     public function register()
     {
         //
+    }
+    public function report(Throwable $exception)
+    {
+        parent::report($exception);
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        return parent::render($request, $exception);
     }
 }

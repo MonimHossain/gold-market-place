@@ -1,0 +1,1 @@
+<p>Your account has been deleted. You have to create an account with another email.</p>

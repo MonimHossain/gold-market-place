@@ -1,0 +1,1 @@
+<p>Here is the link to retrive password.</p>
