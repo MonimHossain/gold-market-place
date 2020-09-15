@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\AdminUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,7 @@ use App\Mail\RegistrationMail;
 use App\Mail\ForgotPassword;
 use App\Mail\ResetPassword;
 use App\Mail\AdminRegistrationMail;
+use Illuminate\Support\Facades\Route;
 
 
 
@@ -86,48 +88,25 @@ class AuthController extends Controller
     }
     public function adminRegister(Request $request)
     {
+
             // return $request;
             $request->validate([
                     'username' => 'required',
                     'email' => 'required',
                     'password' => 'required',
-                    'role' => 'required',
             ]);
 
-            $user = new User;
+            $user = new AdminUser;
             $user->username = strtolower($request->username);
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
-            $user->role = $request->role;
             $user->save();
 
             Mail::to('monimh786@gmail.com')->send(new AdminRegistrationMail());
 
             return response()->json([
-                'message' => 'Successfully created user!'
+                'message' => 'Successfully created admin!'
             ], 201);
-    }
-    public function verifyPhoneNumber(Request $request){
-        $request->validate([
-            'id' => 'required',
-            'phone_verification_code' => 'required',
-        ]);
-
-        $user = User::find($request->id);
-
-        if($user == ''){
-            return response()->json([
-                'message' => 'Error: Invalid id!'
-            ], 201);
-        }
-        
-        $user->phone_verification_code = $request->phone_verification_code;
-        $user->save();
-
-        return response()->json([
-            'message' => 'Successfully verfied phone number!'
-        ], 201);
-
     }
 
     public function scheduleCallTimeForContact(Request $request){
@@ -272,4 +251,33 @@ class AuthController extends Controller
         
         
     }
+
+    public function getAdminUsers(Request $request){
+        return AdminUser::all();
+    }
+
+    protected function authenticated(Request $request, $user)
+    {               
+        // implement your user role retrieval logic, for example retrieve from `roles` database table
+        $role = $user->checkRole();
+
+        // grant scopes based on the role that we get previously
+        if ($role == 'superadmin') {
+            $request->request->add([
+                'scope' => 'manage-order' // grant manage order scope for user with admin role
+            ]);
+        } else {
+            $request->request->add([
+                'scope' => 'read-only-order' // read-only order scope for other user role
+            ]);
+        }
+
+        // forward the request to the oauth token request endpoint
+        $tokenRequest = Request::create(
+            '/oauth/token',
+            'post'
+        );
+        return Route::dispatch($tokenRequest);
+    }
+
 }

@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\AdminUser;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,11 +29,11 @@ Route::group([
      Route::post('admin-register', 'Auth\AuthController@adminRegister')->name('admin-register');
      Route::post('forgot-password', 'Auth\AuthController@forgotPassword')->name('forgot-password');
      Route::post('reset-password', 'Auth\AuthController@resetPassword')->name('reset-password');  
+     Route::get('/get-admin-users', 'Auth\AuthController@getAdminUsers')->middleware(['auth:api', 'scopes:manage-order']);
 
      Route::group([
         'middleware' => 'auth:api'
       ], function() {
-          Route::post('phone-verification', 'Auth\AuthController@verifyPhoneNumber')->name('phone-verification');
           Route::post('schedule-call-time', 'Auth\AuthController@scheduleCallTimeForContact')->name('schedule-call-time');
           Route::post('image-upload', 'Auth\AuthController@imageUpload')->name('image-upload');
           Route::post('logout', 'Auth\AuthController@logout')->name('logout');
@@ -47,5 +49,11 @@ Route::group(['prefix' => 'users'], function () {
         Route::get('/get-details/{name}', 'User\UserController@getUserBySlug')->name('get-details');
         Route::post('/verify-users', 'User\UserController@verifyUsers')->name('verify-users');
         Route::post('/delete-users', 'User\UserController@deleteUsers')->name('delete-users');
+        Route::post('/mobile-verify', 'User\UserController@verifyPhoneNumber')->name('mobile-verify');
+        Route::post('/mail-mobile-code', 'User\UserController@mailMobileCode')->name('mail-mobile-code');
+        Route::post('/create-vault', 'User\UserController@createVault')->name('create-vault');
+        Route::get('/get-vault', 'User\UserController@getVault')->name('get-vault');
+        Route::delete('delete-vault/{id}', 'User\UserController@deleteVault')->name('delete-vault');
+        Route::post('/update-vault', 'User\UserController@updateVault')->name('update-vault');
     });
 });
