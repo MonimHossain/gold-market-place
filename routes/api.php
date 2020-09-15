@@ -24,6 +24,7 @@ Route::group([
 ], function () {
     //  Route::post('login', 'Auth\AuthController@login')->name('login');
      Route::post('register', 'Auth\AuthController@register')->name('register');  
+     Route::post('admin-register', 'Auth\AuthController@adminRegister')->name('admin-register');
      Route::post('forgot-password', 'Auth\AuthController@forgotPassword')->name('forgot-password');
      Route::post('reset-password', 'Auth\AuthController@resetPassword')->name('reset-password');  
 

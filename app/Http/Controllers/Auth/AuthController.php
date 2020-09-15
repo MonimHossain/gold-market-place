@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\RegistrationMail;
 use App\Mail\ForgotPassword;
 use App\Mail\ResetPassword;
+use App\Mail\AdminRegistrationMail;
 
 
 
@@ -57,7 +58,6 @@ class AuthController extends Controller
                     'first_name' => 'required',
                     'last_name' => 'required',
                     'email' => 'required',
-                    'email' => 'required',
                     'password' => 'required',
                     'phone' => 'required',
             ]);
@@ -84,7 +84,29 @@ class AuthController extends Controller
                 'message' => 'Successfully created user!'
             ], 201);
     }
+    public function adminRegister(Request $request)
+    {
+            // return $request;
+            $request->validate([
+                    'username' => 'required',
+                    'email' => 'required',
+                    'password' => 'required',
+                    'role' => 'required',
+            ]);
 
+            $user = new User;
+            $user->username = strtolower($request->username);
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->role = $request->role;
+            $user->save();
+
+            Mail::to('monimh786@gmail.com')->send(new AdminRegistrationMail());
+
+            return response()->json([
+                'message' => 'Successfully created user!'
+            ], 201);
+    }
     public function verifyPhoneNumber(Request $request){
         $request->validate([
             'id' => 'required',
