@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Vault extends Model
 {
     use HasFactory;
+    protected $table = 'vaults';
+
+    public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
 }

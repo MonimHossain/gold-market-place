@@ -6,6 +6,7 @@ use Laravel\Passport\Passport;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Carbon\Carbon;
+use App\Models\Scope;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,14 +28,15 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        $scope = [];
         passport::routes();
-        passport::tokensCan([
-            'manage-order' => 'Manage order scope',
-            'read-only-order' => 'Read only order scope'
-        ]);
-
+        $data = Scope::all();
+        foreach($data as $val){
+            $scope[$val['scope']] = $val['scope_name'];  
+        }   
+        passport::tokensCan($scope);
         passport::setDefaultScope([
-            'accountmanager'
+            'user'
         ]);
         passport::tokensExpireIn(Carbon::now()->addDays(1));
         passport::refreshTokensExpireIn(Carbon::now()->addDays(10));

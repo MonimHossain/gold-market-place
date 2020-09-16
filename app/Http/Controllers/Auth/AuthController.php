@@ -15,12 +15,14 @@ use App\Mail\ForgotPassword;
 use App\Mail\ResetPassword;
 use App\Mail\AdminRegistrationMail;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Hash;
+use Ixudra\Curl\Facades\Curl;
 
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
+    public function login(Request $request) 
+    {
         $request->validate([
              'email' => 'required|email',
              'password' => 'required'
@@ -51,11 +53,62 @@ class AuthController extends Controller
             )->toDateTimeString()
         ]);
 
-   }
+    }
+   
+   public function adminLogin(Request $request) 
+   {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+        
+        $admin = AdminUser::where('email', $request->email)->first();
 
+        if(Hash::check($request->password, $admin->password)){
+            // echo "Hello";
+            // $response = Curl::to('/oauth/token')
+            //     ->withHeader('Content-Type : multipart/form-data')
+            //     ->withData([
+                    // 'grant_type' => 'password',
+                    // 'username' => 'monimh786@gmail.com',
+                    // 'password' => '123456',
+                    // 'client_id' => '5',
+                    // 'client_secret' => 'T7cu1cy81fanyTDAlqH1j8xJ21EiAtNUa9U6Cljh',
+                    // 'scope' => '',
+            //     ])
+            //     ->asJson()
+            //     ->post();
+
+                
+            $data = [
+                'grant_type' => 'password',
+                'username' => 'monimh786@gmail.com',
+                'password' => '123456',
+                'client_id' => '5',
+                'client_secret' => 'T7cu1cy81fanyTDAlqH1j8xJ21EiAtNUa9U6Cljh',
+                'scope' => 'read-only',
+            ];
+
+            $request = Request::create('oauth/token', 'POST', $data);
+            $request->headers->set('Accept', 'multipart/form-data');
+            $response = Route::dispatch($request);
+
+            // return response()->json([
+            //     'access_token' => $tokenResult->accessToken,
+            //     'token_type' => 'Bearer',
+            //     'expires_at' => Carbon::parse(
+            //         $tokenResult->token->expires_at
+            //     )->toDateTimeString()
+            // ]);
+            return $response;
+        }
+        else{
+            return 'Email or Password Does not Match!!!';
+        }
+    }
     public function register(Request $request)
     {
-            // return $request;
+            return $request;
             $request->validate([
                     'first_name' => 'required',
                     'last_name' => 'required',
@@ -88,8 +141,6 @@ class AuthController extends Controller
     }
     public function adminRegister(Request $request)
     {
-
-            // return $request;
             $request->validate([
                     'username' => 'required',
                     'email' => 'required',
@@ -264,11 +315,11 @@ class AuthController extends Controller
         // grant scopes based on the role that we get previously
         if ($role == 'superadmin') {
             $request->request->add([
-                'scope' => 'manage-order' // grant manage order scope for user with admin role
+                'scope' => 'manage' // grant manage order scope for user with admin role
             ]);
         } else {
             $request->request->add([
-                'scope' => 'read-only-order' // read-only order scope for other user role
+                'scope' => 'read-only' // read-only order scope for other user role
             ]);
         }
 
@@ -279,5 +330,7 @@ class AuthController extends Controller
         );
         return Route::dispatch($tokenRequest);
     }
+
+	
 
 }

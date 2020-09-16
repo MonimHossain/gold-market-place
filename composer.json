@@ -9,13 +9,16 @@
     "license": "MIT",
     "require": {
         "php": "^7.3",
+        "barryvdh/laravel-dompdf": "^0.8.7",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "ixudra/curl": "^6.20",
         "laravel/framework": "^8.0",
         "laravel/passport": "^10.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "laraveldaily/laravel-invoices": "^1.3"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

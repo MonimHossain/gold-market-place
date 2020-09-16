@@ -1,0 +1,1 @@
+<p>Your vault has been disapproved</p>

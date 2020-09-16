@@ -1,0 +1,1 @@
+<p>Your vault has been successfully deleted!</p>

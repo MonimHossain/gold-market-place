@@ -6,10 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Mail\VerifyUserMail;
 use App\Mail\DeleteUserMail;
 use App\Mail\MobileVerification;
+use App\Mail\VerifyPhoneNumber;
+use App\Mail\CreateVault;
+use App\Mail\UpdateVault;
+use App\Mail\DeleteVault;
+use App\Mail\ApprovedVault;
+use App\Mail\DispprovedVault;
 use App\Models\Vault;
+use PDF;
 
 class UserController extends Controller
 {
@@ -93,6 +102,7 @@ class UserController extends Controller
             'message' => 'Successfully sent email!'
         ], 201);
     }
+
     public function verifyPhoneNumber(Request $request){
         $request->validate([
             'id' => 'required',
@@ -108,13 +118,16 @@ class UserController extends Controller
         }
         
         $user->phone_verification_code = $request->phone_verification_code;
-        $user->save();
+        
+        if($user->save())
+            Mail::to('monimh786@gmail.com')->send(new VerifyPhoneNumber());
 
         return response()->json([
             'message' => 'Successfully verfied phone number!'
         ], 201);
 
     }
+
     public function createVault(Request $request){
         
         $request->validate([
@@ -142,12 +155,14 @@ class UserController extends Controller
         $item = $decoded->items;
         $gold_price = $item[0]->xauPrice;
 
+        // sku
+        $sku = "GM-".date("Y-m-d-H-i-s");
 
         $file = $request->file('filename');
 
         $vault = new Vault;
         $vault->title = strtolower($request->title);
-        $vault->type_of_metal = $request->type_of_metal;
+        $vault->type_of_metal = strtolower($request->type_of_metal);
         $vault->category = $request->category;
         $vault->manufactor = $request->manufactor;
         $vault->weight = $request->weight;
@@ -161,6 +176,7 @@ class UserController extends Controller
         $vault->zip_code = $request->zip_code;
         $vault->country = $request->country;
         $vault->user_id = $request->user_id;
+        $vault->sku = $sku;
         $vault->rate = $gold_price;
         $vault->currency = $request->currency;
         $vault->description = $request->description ? $request->description : '';
@@ -168,13 +184,15 @@ class UserController extends Controller
         $fileDestinationPath = 'storage/app/vault/'.$request->user_id.'/';
         $file->move($fileDestinationPath, $file->getClientOriginalName());
 
-        $vault->save();
-        
+        if($vault->save())
+            Mail::to('monimh786@gmail.com')->send(new CreateVault());
+
         return response()->json([
             'message' => 'Successfully created vault !'
         ], 201);
 
     }
+
     public function getVault(Request $request){
         $request->validate([
             'user_id' => 'required',
@@ -189,6 +207,7 @@ class UserController extends Controller
     {
         if ($request->id != '') {
             Vault::where('id', $request->id)->delete();
+            Mail::to('monimh786@gmail.com')->send(new DeleteVault());
             return response()->json(['message' => 'success']);
         } else {
             return response()->json(['message' => 'id is required'], 422);
@@ -233,7 +252,94 @@ class UserController extends Controller
         $vault->currency = $request->currency ? $request->currency : $vault->currency;
         $vault->description = $request->description ? $request->description : $vault->description;
 
-        if($vault->save())
+        if($vault->save()){
+            Mail::to('monimh786@gmail.com')->send(new UpdateVault());
             return response()->json(['message' => 'success']);
+        }
+    }
+
+    public function vaultApproval(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'status' => 'required',
+        ]);
+        
+        $vault = Vault::where('id', $request->id)->first();
+
+        $vault->approval_status = $request->status;
+        $vault->save();
+
+        if($request->status=='approved')
+            Mail::to('monimh786@gmail.com')->send(new ApprovedVault());
+        else
+            Mail::to('monimh786@gmail.com')->send(new DispprovedVault());
+
+        return response()->json(['message' => 'success']);
+        
+    }
+
+    public function getVaultItem(Request $request)
+    {
+        $vault = Vault::with('user')->get();
+        return response()->json($vault);
+        
+    }
+
+    public function getDetailVaultItem(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $vault = Vault::find($request->id);
+        return response()->json($vault);       
+    }
+
+    public function getSummaryVaultItem(Request $request)
+    {
+        $vault = Vault::select(DB::raw('type_of_metal, SUM(weight) as weight'))
+                        ->groupBy('type_of_metal')
+                        ->get();    
+
+        $vault_today = Vault::select(DB::raw('type_of_metal, SUM(weight) as weight'))
+                        ->groupBy('type_of_metal')
+                        ->whereDate('created_at', Carbon::today())
+                        ->get();
+
+        $vault_yesterday = Vault::select(DB::raw('type_of_metal, SUM(weight) as weight'))
+                        ->groupBy('type_of_metal')
+                        ->whereDate('created_at', Carbon::yesterday())
+                        ->get();    
+                        
+        return response()->json([
+            'vaultTotalSummary' => $vault,
+            'vaultTodaySummary' => $vault_today,
+            'vaultYesterdaySummary' => $vault_yesterday,
+        ]);;
+    }
+
+    public function getVaultSearch(Request $request)
+    {
+        $vault = DB::table('vaults')
+        ->select('vaults.*','users.first_name', 'users.last_name')
+        ->join('users','vaults.user_id','=','users.id')
+        ->where('vaults.approval_status',$request->status)
+        // ->orWhere('vaults.id',$request->id)
+        // ->orWhere('vaults.type_of_metal', $request->type)
+        ->get();
+
+        return response()->json($vault);
+    }
+    public function printPDF(Request $request)
+    {
+        $data = [
+            'title' => '',
+            'heading' => '',
+            'content' => ''        
+              ];
+          
+          $pdf = PDF::loadView('invoice/vault-create', $data);  
+          return $pdf->download('medium.pdf');
     }
 }
