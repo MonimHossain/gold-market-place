@@ -1,0 +1,1290 @@
+{
+	"info": {
+		"_postman_id": "00b02e34-bbd1-4711-8d1e-1d789d857d46",
+		"name": "Gold Market Place",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "monimh786@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "dSh0X3XWvmd8A6OmlNDSVgIdztjIJbUZumna1I4W",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "Monim",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Hossain",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "flynmonim@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "+8801675747316",
+									"type": "text"
+								},
+								{
+									"key": "national_id",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "passport_id",
+									"value": "passport_1",
+									"type": "text"
+								},
+								{
+									"key": "id_no",
+									"value": "passport_id",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Schedule Call Time",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "contact_call_type",
+									"value": "fixed",
+									"type": "text"
+								},
+								{
+									"key": "schedule_date",
+									"value": "2020/9/20",
+									"type": "text"
+								},
+								{
+									"key": "schedule_time",
+									"value": "7.00 PM",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/auth/schedule-call-time",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"auth",
+								"schedule-call-time"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "File upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "id_no",
+									"value": "national_id",
+									"type": "text"
+								},
+								{
+									"key": "image_upload",
+									"type": "file",
+									"src": "/C:/Users/Admin/Desktop/20153619.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/auth/image-upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"auth",
+								"image-upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2IwNWM1YTJjOTJhZTZlZjg4NGQ4ODYzYjEzN2NiODBmMjE3Y2Q4MTIyZjlmODNlOTI4ZTkzNWVmOWQ4NjNjMzg4NDM4NTNjYjZlZWNiMWMiLCJpYXQiOjE2MDAwNjM1NDAsIm5iZiI6MTYwMDA2MzU0MCwiZXhwIjoxNjMxNTk5NTQwLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.FyHj3wWNJwC_Y9a2RzTRwOPqscxKqvgcce_X2J5WHw6TdmNqAkMhbkr461qsnakUim0R_ia3BAmT40TYA-LAXeurs8UnS0_Nc9pcdqvsdn1oznGKBSg1E4rB0TspqWynaBVt06F2ZBkHfkJSXJyuhB2n5l2UU9wAKifmQR9PXy21ase0lnXYtuTnDq_04zFHSzNJm3T8R494W_NIMN-cY8bglJMGyRD9c8h12nX614_HGb-lQpObMVBOjYD5cGQsbzNGfLCbL_NuFKC7FaMVv56uX0Ct37mUPQT7e9IZBMHjcCiBEupzn01LjVU33V1BkGZeMD6esIAahDg68I04ieth35VJmQXjXLbbSMbsfDPbvM5C6xjs-iDGlSLkrkytMnCH00mZtYhBJIWkzU0aGuE7VM3NyBDSMK4FKb4X675pwAphAbjsnuz0NO44_EIj6CmPKvSDOC7mGklDhNm2wxuWCjAAt9R5dco8f4jNzqF0wCWTNduauOb5IIShKDstuxKRorKJeysUCv8_2_WYZyO588ITrZT-6aDRvZmhatLCIVjtxN4AosWCi8Aq8AkgVPrmzmQLVWFv58OxRbanepVnbUq5EMGC_Yn4AwuE3pgVuC0BKGUXn8JMF1QzNxYWtq6MdH5xUMOFsImuxphmqX1Lm_6VDklkIw5CJAnZN2c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login with refresh token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "def50200eb9f2ef4afd84cfde0efce7b2411d59c0987b3002000f093b419b9e21c214a81640de9f6bbfa58394cf7cc708736e1b406d2254e206d052dfa2d2c59c6b9b36f329dc134ff3fdd41d662153c57959bfb077201d69adf3119a5fb203cef2189d3abc994b9ba0b1cced35a0c87dd60b9752cbd381deca3636976473d64849fa9eaeaf098b8a24b7838c391cf10bf737692679e06f5a44d52d21144bb1b3116d6b307180ceff0f4f7bf10e5f43d2245a57fa7635087291106987c337bc30bb46cb5784a33f1634d3dd6658ba4519bd9566ff00c432467af96c8e074e956fea1f1490313454f27f67af90a9838168a94b309d9eb4a9fdbafaae4d70151322109715bc3830de4485c73ccc0e260eb4aaf25a80a0b3088f55d5ae3ee1c43ea64e4488a9536fb51b8650028993dcf609ca4258bd4727eeaf9cb912f9e9e794d1e3eb879340270e4204f317c2e7af1569650f99e21b1a5a73cb84c90c2091f2b31",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "dSh0X3XWvmd8A6OmlNDSVgIdztjIJbUZumna1I4W",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "tonmoy",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "b@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/auth/admin-register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"auth",
+								"admin-register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Admin users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/get-admin-users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"get-admin-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiOWU3ZTY5OWVhMDllOGRhYTgyYTJkYjdlZmFiNDI4MDFhYzdkOWU1ZDA0ODg1N2FmZDk4NGI5NjU3OWI4MjZjNGM3YzJmNjRiYjk3MDNkNWMiLCJpYXQiOjE2MDAyMzIzNzAsIm5iZiI6MTYwMDIzMjM3MCwiZXhwIjoxNjAwMzE4NzcwLCJzdWIiOiIzIiwic2NvcGVzIjpbInJlYWQtb25seSJdfQ.mpxs_RZ-w3546AQ7a1V-C3FCTqofcV8lbKGnXRfxXoKAaQdTEYdBmvXCOMYK0_227dGnNYcaUc4lrIbsBpGkUHk4bG_jcghYk1b3QjhaYcmMWD9YCU_RgByS1M8dcHYsYg4t5oH_ruxgcgB3UkbBULLgx3EkVgLfPKLgOOvhzIJ_k40tt2Iiwp556P9BnqH60nK9od7gY6U_oxBENqfFOR-tzRf2joysxePgZXSXXSvwRSPb-BipJV8wFsCHZK7SPeG7t13TFxECg3VpySMzMlRaLthoZ9KX-05UgvgL602Nj0aGgJ2Pjsydn5OIrWJf44a1iMtXa2eo-x_Jmf_PzZqGwia7msjdGlOdi537RZSnHhdB2ExDSjivcaaDk_IduvJCGl-auDqvlyav5WKqgwGS5N13a4Ld4kbtPXpjM573nhzpnshmEjKh4-vyepfu_ZvuSHV0RVCGEN-0RzasiJ2iKmzyalkUlU66drG5pT7ThPOtixnJMQ0CVlg6OYo7mAzr6-nlkvSISv-uoO4DXMRJlKb4mX_H4nbUJh0EqHCfi7SyEvVEN2I667CSvNX1yq4u_PW9wMe20krBGzih62U5-iqA9Anf4zb1PDe6ePPEkyeQUtuaTjBnXrV0gRgUj1SIc9mCTcc7ck_XjHUmvOiqBWbXmJrZxAC4E7rjsTA",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "flynmonim@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/auth/admin-login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"auth",
+								"admin-login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Phone Verification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMGY2MWU2OWU4ZTM0OWUyMTJjYjE5NDQ3MTRkNTk4OGE5ZDk1MmIyNjZjMjU0YmY1ZjgyNjQzYjBmZmMzNmZkNTU1OWJmYmVkZTcyNTc3ODIiLCJpYXQiOjE2MDAxNjY0ODEsIm5iZiI6MTYwMDE2NjQ4MSwiZXhwIjoxNjAwMjUyODgxLCJzdWIiOiIzIiwic2NvcGVzIjpbImFjY291bnRtYW5hZ2VyIl19.LtEOLQSwimk9wtpEUaMZsn3UbU7Kk5JXCoL-iKXt4detkt5xsn3ZXGp5VQZ_NN7bbU5HHy3mjoUzxxaFOHSwGB_3tMCnv9nLzsodgJlLXlhrWd6Zhwj_bBmIrG-0_Wz-GAidmW37BsL9tC1-nee-1rKFHegZTy2yV9bk_56zCDmy8hSJN1aYKn8_CX7Aoo6S5-QJQNfFBN5yRFdLcAP8Tv_xl4ZGr4kQ9DKvv24d32nTDf6-9xcT-2JfV7gkOoc50oNAtgUQArZIgzfekOEYLM3NlnHkWds-ClgNhQlJ4BrrCEh4SRapXafyjnRXaLM1BxsTMX-fjuETfYIcFT8pfn5R9r4aX7PtUY0Svh3jvIjjm9xFSl5eidfhvhLUGD9HEUrxnNj-XoU8B8WXErC8pyISD6_QkUses3OiruuwpI6WiVuoQoooN9xGvuSFroQnah6kNt7fuhz0V4Te_YAOaCRtYQd7ZO84Ms1pVKxP-DCBSU6YmQB-7wiVmDm2RbmykdjDZR0nQ81QfhKHhSYa7UQFcBhlqnUQSGWB5d8Dlw8j0dmKviSKPnh5tPg1WbbB_xQASW48Dp_adaefv07sGXsdzMKgjol7ejAwA9wkxNOPj73o7NRCaO3bNEhfUUpIOKktjuX6g7CwDfs_6C6_TVmEeD2Z5K_Vb0Gr2sKuEeM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "phone_verification_code",
+									"value": "55894",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/mobile-verify",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"mobile-verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"protocolProfileBehavior": {
+						"followRedirects": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWFlODQ4MWU4MjM1ODNkMDQ4MzQ0M2NmOGUxZTZmOWE0ZmQwMDUyZjBiNGY1Yjk4YmQwY2NlMDBiOTU3MTQzZTAyZmU1ZWQ4N2ZiNGM1ODAiLCJpYXQiOjE2MDAwNzM5NzIsIm5iZiI6MTYwMDA3Mzk3MiwiZXhwIjoxNjMxNjA5OTcyLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.GRHiSIVtzMTsI_7BmOfyuMUaFw-PyyU016Ft7345Jo_1Nf1jzQAYjqxwjdDQK_YddFZfBL9IB6aM3J93rnUMFzkDBqR7qJK28m9dDWk_LKFJmT1vo1eE-N29V72GSKW67UBuGeJBKhsGdHP2It_9Pij0NUTdjAQogGJ_eTEI5FyMhjJXD04c0ZPmw1TI0fS5rnSb_FLEVJ0oKmKnjoGtx3PUJUTY4MBF9H51d1_2p39u87YByNWU7WCZmaZ54Kd6GX7LTpzASfgPybhv65XjXVQjDGAthyn_j3dHi9qdKhf-LiiXRAoef120QPhCiaJghucjC0_TPkTM6byd8uCn2jF0y_jsOyByxbJsTiSW1PZZLLFcmgKVBmu1HjrQglhqv4tHYQrEL85RS_ZK-bKdmTvCS3PhlH_b7zvrHcTyd3rpvuSyBNs4bmHMJk3TK5xiySBmv61jMAYBlrcctL26lktuU8YpDLYPS1W8QRuSCQOeOdxZW0AibAm_ecJmBGNZPzTf1nk-grw8OCrJFc7kxs7PWHi_SEvJrKQ9j1DI8hmjGFElAnzHJXwBrcBXMObgVN_h4oRB4SbQpqzQibJ7vAa5YPi68iUHfgE6f3LSvKZ8UhyqRMU76x2ZewU3Te-iyi7-RiEJ9RVxE69VkoJ6L1yp0Zm4mJ0Icr6HTrWdj2g",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/get-users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"get-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWFlODQ4MWU4MjM1ODNkMDQ4MzQ0M2NmOGUxZTZmOWE0ZmQwMDUyZjBiNGY1Yjk4YmQwY2NlMDBiOTU3MTQzZTAyZmU1ZWQ4N2ZiNGM1ODAiLCJpYXQiOjE2MDAwNzM5NzIsIm5iZiI6MTYwMDA3Mzk3MiwiZXhwIjoxNjMxNjA5OTcyLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.GRHiSIVtzMTsI_7BmOfyuMUaFw-PyyU016Ft7345Jo_1Nf1jzQAYjqxwjdDQK_YddFZfBL9IB6aM3J93rnUMFzkDBqR7qJK28m9dDWk_LKFJmT1vo1eE-N29V72GSKW67UBuGeJBKhsGdHP2It_9Pij0NUTdjAQogGJ_eTEI5FyMhjJXD04c0ZPmw1TI0fS5rnSb_FLEVJ0oKmKnjoGtx3PUJUTY4MBF9H51d1_2p39u87YByNWU7WCZmaZ54Kd6GX7LTpzASfgPybhv65XjXVQjDGAthyn_j3dHi9qdKhf-LiiXRAoef120QPhCiaJghucjC0_TPkTM6byd8uCn2jF0y_jsOyByxbJsTiSW1PZZLLFcmgKVBmu1HjrQglhqv4tHYQrEL85RS_ZK-bKdmTvCS3PhlH_b7zvrHcTyd3rpvuSyBNs4bmHMJk3TK5xiySBmv61jMAYBlrcctL26lktuU8YpDLYPS1W8QRuSCQOeOdxZW0AibAm_ecJmBGNZPzTf1nk-grw8OCrJFc7kxs7PWHi_SEvJrKQ9j1DI8hmjGFElAnzHJXwBrcBXMObgVN_h4oRB4SbQpqzQibJ7vAa5YPi68iUHfgE6f3LSvKZ8UhyqRMU76x2ZewU3Te-iyi7-RiEJ9RVxE69VkoJ6L1yp0Zm4mJ0Icr6HTrWdj2g",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/filter-users/inactive",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"filter-users",
+								"inactive"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWFlODQ4MWU4MjM1ODNkMDQ4MzQ0M2NmOGUxZTZmOWE0ZmQwMDUyZjBiNGY1Yjk4YmQwY2NlMDBiOTU3MTQzZTAyZmU1ZWQ4N2ZiNGM1ODAiLCJpYXQiOjE2MDAwNzM5NzIsIm5iZiI6MTYwMDA3Mzk3MiwiZXhwIjoxNjMxNjA5OTcyLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.GRHiSIVtzMTsI_7BmOfyuMUaFw-PyyU016Ft7345Jo_1Nf1jzQAYjqxwjdDQK_YddFZfBL9IB6aM3J93rnUMFzkDBqR7qJK28m9dDWk_LKFJmT1vo1eE-N29V72GSKW67UBuGeJBKhsGdHP2It_9Pij0NUTdjAQogGJ_eTEI5FyMhjJXD04c0ZPmw1TI0fS5rnSb_FLEVJ0oKmKnjoGtx3PUJUTY4MBF9H51d1_2p39u87YByNWU7WCZmaZ54Kd6GX7LTpzASfgPybhv65XjXVQjDGAthyn_j3dHi9qdKhf-LiiXRAoef120QPhCiaJghucjC0_TPkTM6byd8uCn2jF0y_jsOyByxbJsTiSW1PZZLLFcmgKVBmu1HjrQglhqv4tHYQrEL85RS_ZK-bKdmTvCS3PhlH_b7zvrHcTyd3rpvuSyBNs4bmHMJk3TK5xiySBmv61jMAYBlrcctL26lktuU8YpDLYPS1W8QRuSCQOeOdxZW0AibAm_ecJmBGNZPzTf1nk-grw8OCrJFc7kxs7PWHi_SEvJrKQ9j1DI8hmjGFElAnzHJXwBrcBXMObgVN_h4oRB4SbQpqzQibJ7vAa5YPi68iUHfgE6f3LSvKZ8UhyqRMU76x2ZewU3Te-iyi7-RiEJ9RVxE69VkoJ6L1yp0Zm4mJ0Icr6HTrWdj2g",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/search-users?email=&passport=passport_1&national=&id=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"search-users"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": ""
+								},
+								{
+									"key": "passport",
+									"value": "passport_1"
+								},
+								{
+									"key": "national",
+									"value": ""
+								},
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Users",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNTExMzc2MDI4NzliODQ2NmQ4NTNjODc2NTZkN2E3ZWY5MjIwNjU0OTFjN2VjNmMzZWYyYmNkMjhiMTk0YWJlMGNmYzQ4YzBlN2I5OTE5NmMiLCJpYXQiOjE2MDAwODIzMDMsIm5iZiI6MTYwMDA4MjMwMywiZXhwIjoxNjMxNjE4MzAzLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.thmoGBNl7khwI4kFCy8TJWMIsOCMwRyQCxXyeDdUlovhOKHeK_2CYa-wYuLUlj6t760rPu2VLi5GXG-eA3iuXp7D7EZcZ0pwVKCfkpaflJUeK9kBfoHgD1lumA1xB1oXfo2VT_1bNZuTYKmEB8AKsXuHlDaJ7rAfq-k1-USXBSVAYyzwPoLzK8ddfWTG5y-y600B_Z4aniEeTgfa4BPCywn_1XYcvnHs8AAq9GihVBdsMJW31Zqrravmr35ofm2X7NfA-jCZEnyb7zfoiZwonFyd_ibFlAzHHRB8Zdo-oW7DFAGNOvbQ8EHWmMFvkb4-reUn1PVmXRXBuqua0pql6jLDXTfc8u1Q3xfB20Mashcl-V8hnP9n44qDkQfnYac4cXak0fhW3YrZCTPo_0Mwe9LU8BXcLtyBXwRljKfAxJA9mW88SzCapA4IDn54h7DeU0PAZHrDIIzhJnUbHcxKwdK9iDdvmXZq9rbu0xDKUvDc1Qdh9917718bp-I3M_MktTD-zu7jUGeDa5DCHhOssOrC-TZGg3kofEdI6L5hVvi2Sl3oHlr8FeDQOecKT05QQnN8U2GxictpsQUv07nqIl95azKyC51xmhNEpUf-OValAdHDJZW0TPEDY1R0LnGlzJ14JPOxpWVu3PAi7R9RN4ZiIgCmwUhB85x67KHViyY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "13",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/verify-users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"verify-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNTExMzc2MDI4NzliODQ2NmQ4NTNjODc2NTZkN2E3ZWY5MjIwNjU0OTFjN2VjNmMzZWYyYmNkMjhiMTk0YWJlMGNmYzQ4YzBlN2I5OTE5NmMiLCJpYXQiOjE2MDAwODIzMDMsIm5iZiI6MTYwMDA4MjMwMywiZXhwIjoxNjMxNjE4MzAzLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.thmoGBNl7khwI4kFCy8TJWMIsOCMwRyQCxXyeDdUlovhOKHeK_2CYa-wYuLUlj6t760rPu2VLi5GXG-eA3iuXp7D7EZcZ0pwVKCfkpaflJUeK9kBfoHgD1lumA1xB1oXfo2VT_1bNZuTYKmEB8AKsXuHlDaJ7rAfq-k1-USXBSVAYyzwPoLzK8ddfWTG5y-y600B_Z4aniEeTgfa4BPCywn_1XYcvnHs8AAq9GihVBdsMJW31Zqrravmr35ofm2X7NfA-jCZEnyb7zfoiZwonFyd_ibFlAzHHRB8Zdo-oW7DFAGNOvbQ8EHWmMFvkb4-reUn1PVmXRXBuqua0pql6jLDXTfc8u1Q3xfB20Mashcl-V8hnP9n44qDkQfnYac4cXak0fhW3YrZCTPo_0Mwe9LU8BXcLtyBXwRljKfAxJA9mW88SzCapA4IDn54h7DeU0PAZHrDIIzhJnUbHcxKwdK9iDdvmXZq9rbu0xDKUvDc1Qdh9917718bp-I3M_MktTD-zu7jUGeDa5DCHhOssOrC-TZGg3kofEdI6L5hVvi2Sl3oHlr8FeDQOecKT05QQnN8U2GxictpsQUv07nqIl95azKyC51xmhNEpUf-OValAdHDJZW0TPEDY1R0LnGlzJ14JPOxpWVu3PAi7R9RN4ZiIgCmwUhB85x67KHViyY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/delete-users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"delete-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by Slug",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWFlODQ4MWU4MjM1ODNkMDQ4MzQ0M2NmOGUxZTZmOWE0ZmQwMDUyZjBiNGY1Yjk4YmQwY2NlMDBiOTU3MTQzZTAyZmU1ZWQ4N2ZiNGM1ODAiLCJpYXQiOjE2MDAwNzM5NzIsIm5iZiI6MTYwMDA3Mzk3MiwiZXhwIjoxNjMxNjA5OTcyLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.GRHiSIVtzMTsI_7BmOfyuMUaFw-PyyU016Ft7345Jo_1Nf1jzQAYjqxwjdDQK_YddFZfBL9IB6aM3J93rnUMFzkDBqR7qJK28m9dDWk_LKFJmT1vo1eE-N29V72GSKW67UBuGeJBKhsGdHP2It_9Pij0NUTdjAQogGJ_eTEI5FyMhjJXD04c0ZPmw1TI0fS5rnSb_FLEVJ0oKmKnjoGtx3PUJUTY4MBF9H51d1_2p39u87YByNWU7WCZmaZ54Kd6GX7LTpzASfgPybhv65XjXVQjDGAthyn_j3dHi9qdKhf-LiiXRAoef120QPhCiaJghucjC0_TPkTM6byd8uCn2jF0y_jsOyByxbJsTiSW1PZZLLFcmgKVBmu1HjrQglhqv4tHYQrEL85RS_ZK-bKdmTvCS3PhlH_b7zvrHcTyd3rpvuSyBNs4bmHMJk3TK5xiySBmv61jMAYBlrcctL26lktuU8YpDLYPS1W8QRuSCQOeOdxZW0AibAm_ecJmBGNZPzTf1nk-grw8OCrJFc7kxs7PWHi_SEvJrKQ9j1DI8hmjGFElAnzHJXwBrcBXMObgVN_h4oRB4SbQpqzQibJ7vAa5YPi68iUHfgE6f3LSvKZ8UhyqRMU76x2ZewU3Te-iyi7-RiEJ9RVxE69VkoJ6L1yp0Zm4mJ0Icr6HTrWdj2g",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/get-details/monim",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"get-details",
+								"monim"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/auth/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiOWFlODQ4MWU4MjM1ODNkMDQ4MzQ0M2NmOGUxZTZmOWE0ZmQwMDUyZjBiNGY1Yjk4YmQwY2NlMDBiOTU3MTQzZTAyZmU1ZWQ4N2ZiNGM1ODAiLCJpYXQiOjE2MDAwNzM5NzIsIm5iZiI6MTYwMDA3Mzk3MiwiZXhwIjoxNjMxNjA5OTcyLCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.GRHiSIVtzMTsI_7BmOfyuMUaFw-PyyU016Ft7345Jo_1Nf1jzQAYjqxwjdDQK_YddFZfBL9IB6aM3J93rnUMFzkDBqR7qJK28m9dDWk_LKFJmT1vo1eE-N29V72GSKW67UBuGeJBKhsGdHP2It_9Pij0NUTdjAQogGJ_eTEI5FyMhjJXD04c0ZPmw1TI0fS5rnSb_FLEVJ0oKmKnjoGtx3PUJUTY4MBF9H51d1_2p39u87YByNWU7WCZmaZ54Kd6GX7LTpzASfgPybhv65XjXVQjDGAthyn_j3dHi9qdKhf-LiiXRAoef120QPhCiaJghucjC0_TPkTM6byd8uCn2jF0y_jsOyByxbJsTiSW1PZZLLFcmgKVBmu1HjrQglhqv4tHYQrEL85RS_ZK-bKdmTvCS3PhlH_b7zvrHcTyd3rpvuSyBNs4bmHMJk3TK5xiySBmv61jMAYBlrcctL26lktuU8YpDLYPS1W8QRuSCQOeOdxZW0AibAm_ecJmBGNZPzTf1nk-grw8OCrJFc7kxs7PWHi_SEvJrKQ9j1DI8hmjGFElAnzHJXwBrcBXMObgVN_h4oRB4SbQpqzQibJ7vAa5YPi68iUHfgE6f3LSvKZ8UhyqRMU76x2ZewU3Te-iyi7-RiEJ9RVxE69VkoJ6L1yp0Zm4mJ0Icr6HTrWdj2g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "flynmonim@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "456789",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/auth/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mobile Verification Code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiZTFjMzZlODAzY2VhOGI0MWQyM2VjMTk5ZGIyM2Q3Y2U4NzA2MWRiNWZiYzA5NGFhMTViZTA1Y2NiYWU4MTcyMzhlOTA0ZjEyZWUzZDY5MTMiLCJpYXQiOjE2MDAxNjYwMDYsIm5iZiI6MTYwMDE2NjAwNiwiZXhwIjoxNjAwMjUyNDA2LCJzdWIiOiIzIiwic2NvcGVzIjpbImFjY291bnRtYW5hZ2VyIl19.VQyKqDs0yR2OlqfHs5A-CsVa0uTlr-o6Rn2xGna96H5hZj_jG_LTx79rP3j0UnUyamWKRzr2vV3dx1R0isAKoqx5G05KgmTDuR11qvkEvWe5SIjUfhjtGWYVt9czA2wjJW6ewEIfiHbMPxiSL1_okJNuCFkFRFEPek7r0NYArZbG7z6E2_NP_yC2GvJ_PezADpTTNZLYiRLtTAbI7R9IBFPLwo397vYzO97U2AkNIq1IVt-7wpSUZyivdknGO11EYiI7KuA-Lb20ZlaWLkAc1Y0YUvJxVxv5O4yXOQ_vifqpxSpDz6EEybSVuY7kD8MN4CVg5O58lN8ra6YXJhZ5aEZEdo0XKXME-pT_1krGARf-EDM9Q40FarXZlenVRA0GygZbCrAd3OkQrMSKi-NgN6pDM0OXIhHm-OhVHgAxfvrLFLz7RK7ZTZDbGv1hTmEgLlOyVopJGsB5-62-EycTLHWMevQjfjHgjEwq6n5EDfj4SN0bPJEOYy1-nYtKutXgwAnn5DBKzdPL1NkZ0inyetwGCxRKJUFRNVfog5VKfCEyFCSJRpblElUhR7OTJgbrRZGvNKPg07aiMgSD2ERfAO6hKGJLo-zYuSsWorGJT2FLLVxIZHZAjUIN_3ngKIfNwj0V5qQouziUZ9OXer1c9IrPvUXaHV2w1bE671TxzTo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "flynmonim@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/mail-mobile-code",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"mail-mobile-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Vault",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMGY2MWU2OWU4ZTM0OWUyMTJjYjE5NDQ3MTRkNTk4OGE5ZDk1MmIyNjZjMjU0YmY1ZjgyNjQzYjBmZmMzNmZkNTU1OWJmYmVkZTcyNTc3ODIiLCJpYXQiOjE2MDAxNjY0ODEsIm5iZiI6MTYwMDE2NjQ4MSwiZXhwIjoxNjAwMjUyODgxLCJzdWIiOiIzIiwic2NvcGVzIjpbImFjY291bnRtYW5hZ2VyIl19.LtEOLQSwimk9wtpEUaMZsn3UbU7Kk5JXCoL-iKXt4detkt5xsn3ZXGp5VQZ_NN7bbU5HHy3mjoUzxxaFOHSwGB_3tMCnv9nLzsodgJlLXlhrWd6Zhwj_bBmIrG-0_Wz-GAidmW37BsL9tC1-nee-1rKFHegZTy2yV9bk_56zCDmy8hSJN1aYKn8_CX7Aoo6S5-QJQNfFBN5yRFdLcAP8Tv_xl4ZGr4kQ9DKvv24d32nTDf6-9xcT-2JfV7gkOoc50oNAtgUQArZIgzfekOEYLM3NlnHkWds-ClgNhQlJ4BrrCEh4SRapXafyjnRXaLM1BxsTMX-fjuETfYIcFT8pfn5R9r4aX7PtUY0Svh3jvIjjm9xFSl5eidfhvhLUGD9HEUrxnNj-XoU8B8WXErC8pyISD6_QkUses3OiruuwpI6WiVuoQoooN9xGvuSFroQnah6kNt7fuhz0V4Te_YAOaCRtYQd7ZO84Ms1pVKxP-DCBSU6YmQB-7wiVmDm2RbmykdjDZR0nQ81QfhKHhSYa7UQFcBhlqnUQSGWB5d8Dlw8j0dmKviSKPnh5tPg1WbbB_xQASW48Dp_adaefv07sGXsdzMKgjol7ejAwA9wkxNOPj73o7NRCaO3bNEhfUUpIOKktjuX6g7CwDfs_6C6_TVmEeD2Z5K_Vb0Gr2sKuEeM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "vault no 1",
+									"type": "text"
+								},
+								{
+									"key": "type_of_metal",
+									"value": "gold",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "A",
+									"type": "text"
+								},
+								{
+									"key": "manufactor",
+									"value": "B",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "purity",
+									"value": "100%",
+									"type": "text"
+								},
+								{
+									"key": "serial_no",
+									"value": "45668998",
+									"type": "text"
+								},
+								{
+									"key": "filename",
+									"type": "file",
+									"src": "/C:/Users/Admin/Desktop/20153619.jpg"
+								},
+								{
+									"key": "sending_option",
+									"value": "pick_up",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "78",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "23",
+									"type": "text"
+								},
+								{
+									"key": "zip_code",
+									"value": "43",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "BD",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "rate",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "currency",
+									"value": "USD",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/create-vault",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"create-vault"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Vault",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMGY2MWU2OWU4ZTM0OWUyMTJjYjE5NDQ3MTRkNTk4OGE5ZDk1MmIyNjZjMjU0YmY1ZjgyNjQzYjBmZmMzNmZkNTU1OWJmYmVkZTcyNTc3ODIiLCJpYXQiOjE2MDAxNjY0ODEsIm5iZiI6MTYwMDE2NjQ4MSwiZXhwIjoxNjAwMjUyODgxLCJzdWIiOiIzIiwic2NvcGVzIjpbImFjY291bnRtYW5hZ2VyIl19.LtEOLQSwimk9wtpEUaMZsn3UbU7Kk5JXCoL-iKXt4detkt5xsn3ZXGp5VQZ_NN7bbU5HHy3mjoUzxxaFOHSwGB_3tMCnv9nLzsodgJlLXlhrWd6Zhwj_bBmIrG-0_Wz-GAidmW37BsL9tC1-nee-1rKFHegZTy2yV9bk_56zCDmy8hSJN1aYKn8_CX7Aoo6S5-QJQNfFBN5yRFdLcAP8Tv_xl4ZGr4kQ9DKvv24d32nTDf6-9xcT-2JfV7gkOoc50oNAtgUQArZIgzfekOEYLM3NlnHkWds-ClgNhQlJ4BrrCEh4SRapXafyjnRXaLM1BxsTMX-fjuETfYIcFT8pfn5R9r4aX7PtUY0Svh3jvIjjm9xFSl5eidfhvhLUGD9HEUrxnNj-XoU8B8WXErC8pyISD6_QkUses3OiruuwpI6WiVuoQoooN9xGvuSFroQnah6kNt7fuhz0V4Te_YAOaCRtYQd7ZO84Ms1pVKxP-DCBSU6YmQB-7wiVmDm2RbmykdjDZR0nQ81QfhKHhSYa7UQFcBhlqnUQSGWB5d8Dlw8j0dmKviSKPnh5tPg1WbbB_xQASW48Dp_adaefv07sGXsdzMKgjol7ejAwA9wkxNOPj73o7NRCaO3bNEhfUUpIOKktjuX6g7CwDfs_6C6_TVmEeD2Z5K_Vb0Gr2sKuEeM"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "vault no kkn",
+									"type": "text"
+								},
+								{
+									"key": "type_of_metal",
+									"value": "gold",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "A",
+									"type": "text"
+								},
+								{
+									"key": "manufactor",
+									"value": "B",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "purity",
+									"value": "100%",
+									"type": "text"
+								},
+								{
+									"key": "serial_no",
+									"value": "45668998",
+									"type": "text"
+								},
+								{
+									"key": "filename",
+									"type": "file",
+									"src": "/C:/Users/Admin/Desktop/20153619.jpg"
+								},
+								{
+									"key": "sending_option",
+									"value": "pick_up",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "78",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "23",
+									"type": "text"
+								},
+								{
+									"key": "zip_code",
+									"value": "43",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "BD",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "rate",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "currency",
+									"value": "USD",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/update-vault",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"update-vault"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vault",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMGY2MWU2OWU4ZTM0OWUyMTJjYjE5NDQ3MTRkNTk4OGE5ZDk1MmIyNjZjMjU0YmY1ZjgyNjQzYjBmZmMzNmZkNTU1OWJmYmVkZTcyNTc3ODIiLCJpYXQiOjE2MDAxNjY0ODEsIm5iZiI6MTYwMDE2NjQ4MSwiZXhwIjoxNjAwMjUyODgxLCJzdWIiOiIzIiwic2NvcGVzIjpbImFjY291bnRtYW5hZ2VyIl19.LtEOLQSwimk9wtpEUaMZsn3UbU7Kk5JXCoL-iKXt4detkt5xsn3ZXGp5VQZ_NN7bbU5HHy3mjoUzxxaFOHSwGB_3tMCnv9nLzsodgJlLXlhrWd6Zhwj_bBmIrG-0_Wz-GAidmW37BsL9tC1-nee-1rKFHegZTy2yV9bk_56zCDmy8hSJN1aYKn8_CX7Aoo6S5-QJQNfFBN5yRFdLcAP8Tv_xl4ZGr4kQ9DKvv24d32nTDf6-9xcT-2JfV7gkOoc50oNAtgUQArZIgzfekOEYLM3NlnHkWds-ClgNhQlJ4BrrCEh4SRapXafyjnRXaLM1BxsTMX-fjuETfYIcFT8pfn5R9r4aX7PtUY0Svh3jvIjjm9xFSl5eidfhvhLUGD9HEUrxnNj-XoU8B8WXErC8pyISD6_QkUses3OiruuwpI6WiVuoQoooN9xGvuSFroQnah6kNt7fuhz0V4Te_YAOaCRtYQd7ZO84Ms1pVKxP-DCBSU6YmQB-7wiVmDm2RbmykdjDZR0nQ81QfhKHhSYa7UQFcBhlqnUQSGWB5d8Dlw8j0dmKviSKPnh5tPg1WbbB_xQASW48Dp_adaefv07sGXsdzMKgjol7ejAwA9wkxNOPj73o7NRCaO3bNEhfUUpIOKktjuX6g7CwDfs_6C6_TVmEeD2Z5K_Vb0Gr2sKuEeM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/get-vault?user_id=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"get-vault"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Vault",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiMGY2MWU2OWU4ZTM0OWUyMTJjYjE5NDQ3MTRkNTk4OGE5ZDk1MmIyNjZjMjU0YmY1ZjgyNjQzYjBmZmMzNmZkNTU1OWJmYmVkZTcyNTc3ODIiLCJpYXQiOjE2MDAxNjY0ODEsIm5iZiI6MTYwMDE2NjQ4MSwiZXhwIjoxNjAwMjUyODgxLCJzdWIiOiIzIiwic2NvcGVzIjpbImFjY291bnRtYW5hZ2VyIl19.LtEOLQSwimk9wtpEUaMZsn3UbU7Kk5JXCoL-iKXt4detkt5xsn3ZXGp5VQZ_NN7bbU5HHy3mjoUzxxaFOHSwGB_3tMCnv9nLzsodgJlLXlhrWd6Zhwj_bBmIrG-0_Wz-GAidmW37BsL9tC1-nee-1rKFHegZTy2yV9bk_56zCDmy8hSJN1aYKn8_CX7Aoo6S5-QJQNfFBN5yRFdLcAP8Tv_xl4ZGr4kQ9DKvv24d32nTDf6-9xcT-2JfV7gkOoc50oNAtgUQArZIgzfekOEYLM3NlnHkWds-ClgNhQlJ4BrrCEh4SRapXafyjnRXaLM1BxsTMX-fjuETfYIcFT8pfn5R9r4aX7PtUY0Svh3jvIjjm9xFSl5eidfhvhLUGD9HEUrxnNj-XoU8B8WXErC8pyISD6_QkUses3OiruuwpI6WiVuoQoooN9xGvuSFroQnah6kNt7fuhz0V4Te_YAOaCRtYQd7ZO84Ms1pVKxP-DCBSU6YmQB-7wiVmDm2RbmykdjDZR0nQ81QfhKHhSYa7UQFcBhlqnUQSGWB5d8Dlw8j0dmKviSKPnh5tPg1WbbB_xQASW48Dp_adaefv07sGXsdzMKgjol7ejAwA9wkxNOPj73o7NRCaO3bNEhfUUpIOKktjuX6g7CwDfs_6C6_TVmEeD2Z5K_Vb0Gr2sKuEeM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/delete-vault/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"delete-vault",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vault Approval",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNDExNmRlZmU5NzQ3MmM4ZjdjYmVjYzQ0MzAyYzhjYWNjOTRhNjVhMGI4NDJjYjJmZTI2YzEyYjMwNzU4NjM4YmM2MWNkM2U1MzE0OTVmOGMiLCJpYXQiOjE2MDAyMzY5MDYsIm5iZiI6MTYwMDIzNjkwNiwiZXhwIjoxNjAwMzIzMzA2LCJzdWIiOiIzIiwic2NvcGVzIjpbInJlYWQtb25seSJdfQ.VgRNFVRynvDUnUPfw9PLaQAhHDyPU_sY9h5FANq5-wRsNCvNnrb_HsxDmsKPzLVLie4iaC35qx1tpd9Y7f09AtGYZmIXrqssWU-_WcW0Pkl27sMo48N0dsd83zef9J-IlgFORVnWLVkJCXMxxMM444UrDjl6xzmjcDz9R5yvGu0TLXMx0xtmbDNGBl5M6McPWU7gwlzNGizuYhEE5Oc979olhBplKZcegaBp2wuhzXcDMw0rs-HC1-vZIR2Ws8dSY_oeau7gFLI7O3Ray_N2QdlhhuNj_Ui-mNbMNfJD4U_VgicShvBHhuMQ8mHl7dDQFViIsR_iQxhj6RJSsEK-r8MbsdliU19IKjvN18VLbyFecdpXb9UCv44zyGXO9Ce-MKwh5MTlBsjdu6sr9B0noHpBYx2lcYsRCgqImnZml4i6Wz94epRim5-Xlzr609ZSI_kO6IASs3QytwBnmwaDgfci1ak1BEkCYdoC5HDS2AHplh-8-hBzLf8D8QdcLusiPpRkbqif2kk33mEpxyh_KT6wUYDcrUPw69AzB0t2qiW9A2oCIiVlBS7zxLvb3HAHwgWwIRewbbvp0sizS8LC0yTLFQxGE0k2HnoBs4GILyUTOMEtl_YefGjvMo4zlCfoS80kw4RSGKtde1hco4utKA4CEYVb7QyY4vchNgnXSD4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "approved",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/vault-approval",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"vault-approval"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "approved",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vault Item",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNDExNmRlZmU5NzQ3MmM4ZjdjYmVjYzQ0MzAyYzhjYWNjOTRhNjVhMGI4NDJjYjJmZTI2YzEyYjMwNzU4NjM4YmM2MWNkM2U1MzE0OTVmOGMiLCJpYXQiOjE2MDAyMzY5MDYsIm5iZiI6MTYwMDIzNjkwNiwiZXhwIjoxNjAwMzIzMzA2LCJzdWIiOiIzIiwic2NvcGVzIjpbInJlYWQtb25seSJdfQ.VgRNFVRynvDUnUPfw9PLaQAhHDyPU_sY9h5FANq5-wRsNCvNnrb_HsxDmsKPzLVLie4iaC35qx1tpd9Y7f09AtGYZmIXrqssWU-_WcW0Pkl27sMo48N0dsd83zef9J-IlgFORVnWLVkJCXMxxMM444UrDjl6xzmjcDz9R5yvGu0TLXMx0xtmbDNGBl5M6McPWU7gwlzNGizuYhEE5Oc979olhBplKZcegaBp2wuhzXcDMw0rs-HC1-vZIR2Ws8dSY_oeau7gFLI7O3Ray_N2QdlhhuNj_Ui-mNbMNfJD4U_VgicShvBHhuMQ8mHl7dDQFViIsR_iQxhj6RJSsEK-r8MbsdliU19IKjvN18VLbyFecdpXb9UCv44zyGXO9Ce-MKwh5MTlBsjdu6sr9B0noHpBYx2lcYsRCgqImnZml4i6Wz94epRim5-Xlzr609ZSI_kO6IASs3QytwBnmwaDgfci1ak1BEkCYdoC5HDS2AHplh-8-hBzLf8D8QdcLusiPpRkbqif2kk33mEpxyh_KT6wUYDcrUPw69AzB0t2qiW9A2oCIiVlBS7zxLvb3HAHwgWwIRewbbvp0sizS8LC0yTLFQxGE0k2HnoBs4GILyUTOMEtl_YefGjvMo4zlCfoS80kw4RSGKtde1hco4utKA4CEYVb7QyY4vchNgnXSD4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/get-vault-item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"get-vault-item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vault Item Summary",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNDExNmRlZmU5NzQ3MmM4ZjdjYmVjYzQ0MzAyYzhjYWNjOTRhNjVhMGI4NDJjYjJmZTI2YzEyYjMwNzU4NjM4YmM2MWNkM2U1MzE0OTVmOGMiLCJpYXQiOjE2MDAyMzY5MDYsIm5iZiI6MTYwMDIzNjkwNiwiZXhwIjoxNjAwMzIzMzA2LCJzdWIiOiIzIiwic2NvcGVzIjpbInJlYWQtb25seSJdfQ.VgRNFVRynvDUnUPfw9PLaQAhHDyPU_sY9h5FANq5-wRsNCvNnrb_HsxDmsKPzLVLie4iaC35qx1tpd9Y7f09AtGYZmIXrqssWU-_WcW0Pkl27sMo48N0dsd83zef9J-IlgFORVnWLVkJCXMxxMM444UrDjl6xzmjcDz9R5yvGu0TLXMx0xtmbDNGBl5M6McPWU7gwlzNGizuYhEE5Oc979olhBplKZcegaBp2wuhzXcDMw0rs-HC1-vZIR2Ws8dSY_oeau7gFLI7O3Ray_N2QdlhhuNj_Ui-mNbMNfJD4U_VgicShvBHhuMQ8mHl7dDQFViIsR_iQxhj6RJSsEK-r8MbsdliU19IKjvN18VLbyFecdpXb9UCv44zyGXO9Ce-MKwh5MTlBsjdu6sr9B0noHpBYx2lcYsRCgqImnZml4i6Wz94epRim5-Xlzr609ZSI_kO6IASs3QytwBnmwaDgfci1ak1BEkCYdoC5HDS2AHplh-8-hBzLf8D8QdcLusiPpRkbqif2kk33mEpxyh_KT6wUYDcrUPw69AzB0t2qiW9A2oCIiVlBS7zxLvb3HAHwgWwIRewbbvp0sizS8LC0yTLFQxGE0k2HnoBs4GILyUTOMEtl_YefGjvMo4zlCfoS80kw4RSGKtde1hco4utKA4CEYVb7QyY4vchNgnXSD4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/get-vault-item",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"get-vault-item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Details Vault Item",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNDExNmRlZmU5NzQ3MmM4ZjdjYmVjYzQ0MzAyYzhjYWNjOTRhNjVhMGI4NDJjYjJmZTI2YzEyYjMwNzU4NjM4YmM2MWNkM2U1MzE0OTVmOGMiLCJpYXQiOjE2MDAyMzY5MDYsIm5iZiI6MTYwMDIzNjkwNiwiZXhwIjoxNjAwMzIzMzA2LCJzdWIiOiIzIiwic2NvcGVzIjpbInJlYWQtb25seSJdfQ.VgRNFVRynvDUnUPfw9PLaQAhHDyPU_sY9h5FANq5-wRsNCvNnrb_HsxDmsKPzLVLie4iaC35qx1tpd9Y7f09AtGYZmIXrqssWU-_WcW0Pkl27sMo48N0dsd83zef9J-IlgFORVnWLVkJCXMxxMM444UrDjl6xzmjcDz9R5yvGu0TLXMx0xtmbDNGBl5M6McPWU7gwlzNGizuYhEE5Oc979olhBplKZcegaBp2wuhzXcDMw0rs-HC1-vZIR2Ws8dSY_oeau7gFLI7O3Ray_N2QdlhhuNj_Ui-mNbMNfJD4U_VgicShvBHhuMQ8mHl7dDQFViIsR_iQxhj6RJSsEK-r8MbsdliU19IKjvN18VLbyFecdpXb9UCv44zyGXO9Ce-MKwh5MTlBsjdu6sr9B0noHpBYx2lcYsRCgqImnZml4i6Wz94epRim5-Xlzr609ZSI_kO6IASs3QytwBnmwaDgfci1ak1BEkCYdoC5HDS2AHplh-8-hBzLf8D8QdcLusiPpRkbqif2kk33mEpxyh_KT6wUYDcrUPw69AzB0t2qiW9A2oCIiVlBS7zxLvb3HAHwgWwIRewbbvp0sizS8LC0yTLFQxGE0k2HnoBs4GILyUTOMEtl_YefGjvMo4zlCfoS80kw4RSGKtde1hco4utKA4CEYVb7QyY4vchNgnXSD4"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/get-detail-vault-item?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"get-detail-vault-item"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vault Search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNDExNmRlZmU5NzQ3MmM4ZjdjYmVjYzQ0MzAyYzhjYWNjOTRhNjVhMGI4NDJjYjJmZTI2YzEyYjMwNzU4NjM4YmM2MWNkM2U1MzE0OTVmOGMiLCJpYXQiOjE2MDAyMzY5MDYsIm5iZiI6MTYwMDIzNjkwNiwiZXhwIjoxNjAwMzIzMzA2LCJzdWIiOiIzIiwic2NvcGVzIjpbInJlYWQtb25seSJdfQ.VgRNFVRynvDUnUPfw9PLaQAhHDyPU_sY9h5FANq5-wRsNCvNnrb_HsxDmsKPzLVLie4iaC35qx1tpd9Y7f09AtGYZmIXrqssWU-_WcW0Pkl27sMo48N0dsd83zef9J-IlgFORVnWLVkJCXMxxMM444UrDjl6xzmjcDz9R5yvGu0TLXMx0xtmbDNGBl5M6McPWU7gwlzNGizuYhEE5Oc979olhBplKZcegaBp2wuhzXcDMw0rs-HC1-vZIR2Ws8dSY_oeau7gFLI7O3Ray_N2QdlhhuNj_Ui-mNbMNfJD4U_VgicShvBHhuMQ8mHl7dDQFViIsR_iQxhj6RJSsEK-r8MbsdliU19IKjvN18VLbyFecdpXb9UCv44zyGXO9Ce-MKwh5MTlBsjdu6sr9B0noHpBYx2lcYsRCgqImnZml4i6Wz94epRim5-Xlzr609ZSI_kO6IASs3QytwBnmwaDgfci1ak1BEkCYdoC5HDS2AHplh-8-hBzLf8D8QdcLusiPpRkbqif2kk33mEpxyh_KT6wUYDcrUPw69AzB0t2qiW9A2oCIiVlBS7zxLvb3HAHwgWwIRewbbvp0sizS8LC0yTLFQxGE0k2HnoBs4GILyUTOMEtl_YefGjvMo4zlCfoS80kw4RSGKtde1hco4utKA4CEYVb7QyY4vchNgnXSD4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "status",
+									"value": "pending",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "7",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "silver",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/get-vault-search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"get-vault-search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Print PDF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiNDExNmRlZmU5NzQ3MmM4ZjdjYmVjYzQ0MzAyYzhjYWNjOTRhNjVhMGI4NDJjYjJmZTI2YzEyYjMwNzU4NjM4YmM2MWNkM2U1MzE0OTVmOGMiLCJpYXQiOjE2MDAyMzY5MDYsIm5iZiI6MTYwMDIzNjkwNiwiZXhwIjoxNjAwMzIzMzA2LCJzdWIiOiIzIiwic2NvcGVzIjpbInJlYWQtb25seSJdfQ.VgRNFVRynvDUnUPfw9PLaQAhHDyPU_sY9h5FANq5-wRsNCvNnrb_HsxDmsKPzLVLie4iaC35qx1tpd9Y7f09AtGYZmIXrqssWU-_WcW0Pkl27sMo48N0dsd83zef9J-IlgFORVnWLVkJCXMxxMM444UrDjl6xzmjcDz9R5yvGu0TLXMx0xtmbDNGBl5M6McPWU7gwlzNGizuYhEE5Oc979olhBplKZcegaBp2wuhzXcDMw0rs-HC1-vZIR2Ws8dSY_oeau7gFLI7O3Ray_N2QdlhhuNj_Ui-mNbMNfJD4U_VgicShvBHhuMQ8mHl7dDQFViIsR_iQxhj6RJSsEK-r8MbsdliU19IKjvN18VLbyFecdpXb9UCv44zyGXO9Ce-MKwh5MTlBsjdu6sr9B0noHpBYx2lcYsRCgqImnZml4i6Wz94epRim5-Xlzr609ZSI_kO6IASs3QytwBnmwaDgfci1ak1BEkCYdoC5HDS2AHplh-8-hBzLf8D8QdcLusiPpRkbqif2kk33mEpxyh_KT6wUYDcrUPw69AzB0t2qiW9A2oCIiVlBS7zxLvb3HAHwgWwIRewbbvp0sizS8LC0yTLFQxGE0k2HnoBs4GILyUTOMEtl_YefGjvMo4zlCfoS80kw4RSGKtde1hco4utKA4CEYVb7QyY4vchNgnXSD4",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost/gold-market-place/api/users/print-pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"gold-market-place",
+								"api",
+								"users",
+								"print-pdf"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
