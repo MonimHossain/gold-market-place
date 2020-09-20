@@ -30,7 +30,7 @@ Route::group([
      Route::post('forgot-password', 'Auth\AuthController@forgotPassword')->name('forgot-password');
      Route::post('reset-password', 'Auth\AuthController@resetPassword')->name('reset-password');  
      //admin
-     Route::get('/get-admin-users', 'Auth\AuthController@getAdminUsers')->middleware(['auth:api', 'scopes:manage-order']);
+     Route::get('/get-admin-users', 'Auth\AuthController@getAdminUsers')->middleware(['auth:api', 'scopes:manage,transection,vault']);
      Route::post('/admin-login', 'Auth\AuthController@adminLogin')->name('admin-login');
      Route::post('admin-register', 'Auth\AuthController@adminRegister')->name('admin-register');
 
@@ -54,6 +54,10 @@ Route::group(['prefix' => 'users'], function () {
         Route::post('/delete-users', 'User\UserController@deleteUsers')->name('delete-users');
         Route::post('/mobile-verify', 'User\UserController@verifyPhoneNumber')->name('mobile-verify');
         Route::post('/mail-mobile-code', 'User\UserController@mailMobileCode')->name('mail-mobile-code');
+        Route::post('/turn-on-sale-user', 'User\UserController@turnOnSale')->name('turn-on-sale-user');
+        Route::post('/get-delivered-bullians', 'User\UserController@getDeliveredFromUser')->name('get-delivered-bullians');
+        Route::get('/user-vault-summary', 'User\UserController@userVaultSummary')->name('user-vault-summary');
+        Route::get('/user-vault-history', 'User\UserController@userVaultHistory')->name('user-vault-history');
 
         //admin
         Route::post('/create-vault', 'User\UserController@createVault')->name('create-vault');
@@ -66,5 +70,7 @@ Route::group(['prefix' => 'users'], function () {
         Route::get('/get-detail-vault-summary', 'User\UserController@getSummaryVaultItem')->name('get-detail-vault-summary');
         Route::post('/get-vault-search', 'User\UserController@getVaultSearch')->name('get-vault-search');
         Route::get('/print-pdf', 'User\UserController@printPDF')->name('print-pdf');
+        Route::post('/modify-sale-state-admin', 'User\UserController@modifySaleAdmin')->name('modify-sale-state-admin');
+        Route::post('/modify-delivery-state-admin', 'User\UserController@modifyDeliveryAdmin')->name('modify-delivery-state-admin');
     });
 });

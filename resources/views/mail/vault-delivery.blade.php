@@ -1,0 +1,1 @@
+<p>Your bullions are declined/dispatched</p>

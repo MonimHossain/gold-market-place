@@ -9,14 +9,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegistrationMail;
 use App\Mail\ForgotPassword;
 use App\Mail\ResetPassword;
+use App\Mail\AdminScope;
 use App\Mail\AdminRegistrationMail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use Ixudra\Curl\Facades\Curl;
+use GuzzleHttp\Client;
 
 
 class AuthController extends Controller
@@ -64,43 +67,35 @@ class AuthController extends Controller
         
         $admin = AdminUser::where('email', $request->email)->first();
 
+        $admin_scopes = DB::table('admin_scopes')
+                        ->select('scopes.scope as scope_name')
+                        ->join('scopes', 'scopes.id', '=', 'admin_scopes.scope_id')
+                        ->where('admin_id', $admin->id)
+                        ->first();
+        // $scopes = array();
+        // foreach($admin_scopes as $value){
+        //     array_push($scopes, $value->scope_name);
+        // }
+
+        $scopes = $admin_scopes?$admin_scopes->scope_name: '*';
+
         if(Hash::check($request->password, $admin->password)){
             // echo "Hello";
-            // $response = Curl::to('/oauth/token')
-            //     ->withHeader('Content-Type : multipart/form-data')
-            //     ->withData([
-                    // 'grant_type' => 'password',
-                    // 'username' => 'monimh786@gmail.com',
-                    // 'password' => '123456',
-                    // 'client_id' => '5',
-                    // 'client_secret' => 'T7cu1cy81fanyTDAlqH1j8xJ21EiAtNUa9U6Cljh',
-                    // 'scope' => '',
-            //     ])
-            //     ->asJson()
-            //     ->post();
+            
 
-                
-            $data = [
+        $client = new Client();
+
+        $response = $client->post('http://localhost/gold-market-place/oauth/token', [
+            'form_params' => [
                 'grant_type' => 'password',
                 'username' => 'monimh786@gmail.com',
                 'password' => '123456',
                 'client_id' => '5',
                 'client_secret' => 'T7cu1cy81fanyTDAlqH1j8xJ21EiAtNUa9U6Cljh',
-                'scope' => 'read-only',
-            ];
-
-            $request = Request::create('oauth/token', 'POST', $data);
-            $request->headers->set('Accept', 'multipart/form-data');
-            $response = Route::dispatch($request);
-
-            // return response()->json([
-            //     'access_token' => $tokenResult->accessToken,
-            //     'token_type' => 'Bearer',
-            //     'expires_at' => Carbon::parse(
-            //         $tokenResult->token->expires_at
-            //     )->toDateTimeString()
-            // ]);
-            return $response;
+                'scope' => $scopes,
+            ]
+        ]);
+        return $response;
         }
         else{
             return 'Email or Password Does not Match!!!';
@@ -108,7 +103,6 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
-            return $request;
             $request->validate([
                     'first_name' => 'required',
                     'last_name' => 'required',

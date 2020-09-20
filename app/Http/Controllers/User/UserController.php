@@ -17,8 +17,15 @@ use App\Mail\UpdateVault;
 use App\Mail\DeleteVault;
 use App\Mail\ApprovedVault;
 use App\Mail\DispprovedVault;
+use App\Mail\TurnOnSaleUser;
+use App\Mail\TurnOffSale;
+use App\Mail\VaultDeliveryMail;
+use App\Mail\GetDeliveredUser;
 use App\Models\Vault;
+use App\Models\VaultHistory;
+use App\Models\VaultDelivery;
 use PDF;
+use GuzzleHttp\Client;
 
 class UserController extends Controller
 {
@@ -148,7 +155,15 @@ class UserController extends Controller
             'user_id' => 'required',
             'currency' => 'required'
         ]);
-        
+        // $client = new Client();
+        // $res = $client->get('https://metals-api.com/api/latest', ['access_key' => '18bftjsqr3rgwngw2d8ijtcldjulzca7gio7mt10n99m25gbjvdsj0unt02e']);
+        // echo $res->getStatusCode(); // 200
+        // echo $res->getBody();
+        // die;
+        // $client = new Client();
+
+        // $response = $client->post('https://metals-api.com/api/latest?access_key=18bftjsqr3rgwngw2d8ijtcldjulzca7gio7mt10n99m25gbjvdsj0unt02e');
+        //     return $response;
         //gold rate fetch
         $json = file_get_contents('https://data-asg.goldprice.org/dbXRates/USD');
         $decoded = json_decode($json);
@@ -270,8 +285,10 @@ class UserController extends Controller
         $vault->approval_status = $request->status;
         $vault->save();
 
-        if($request->status=='approved')
+        if($request->status=='approved'){
             Mail::to('monimh786@gmail.com')->send(new ApprovedVault());
+
+        }
         else
             Mail::to('monimh786@gmail.com')->send(new DispprovedVault());
 
@@ -282,8 +299,7 @@ class UserController extends Controller
     public function getVaultItem(Request $request)
     {
         $vault = Vault::with('user')->get();
-        return response()->json($vault);
-        
+        return response()->json($vault);       
     }
 
     public function getDetailVaultItem(Request $request)
@@ -341,5 +357,119 @@ class UserController extends Controller
           
           $pdf = PDF::loadView('invoice/vault-create', $data);  
           return $pdf->download('medium.pdf');
+    }
+    public function turnOnSale(Request $request)
+    {          
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $vault = Vault::find($request->id);
+        $vault->state_status = 'sale_on';
+        if($vault->save()){
+            Mail::to('monimh786@gmail.com')->send(new TurnOnSaleUser());
+        }
+
+        return response()->json(['message' => 'success']);
+    }
+
+    public function modifySaleAdmin(Request $request)
+    {          
+        $request->validate([
+            'id' => 'required',
+            'status' => 'required',
+        ]);
+
+        $vault = Vault::find($request->id);
+
+        if($request->status == 'on'){
+            $vault->state_status = 'sale_on';  
+            $vault->save();  
+            Mail::to('monimh786@gmail.com')->send(new TurnOnSaleUser());
+        }else{
+            $vault->state_status = 'sale_off';
+            $vault->save();
+            Mail::to('monimh786@gmail.com')->send(new TurnOffSale());
+        }
+        
+        return response()->json(['message' => 'success']);
+    }
+    public function getDeliveredFromUser(Request $request)
+    {          
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $vault = Vault::find($request->id);
+        $vault->state_status = 'get_delivered';
+        if($vault->save()){
+            Mail::to('monimh786@gmail.com')->send(new GetDeliveredUser());
+        }
+
+        return response()->json(['message' => 'success']);
+    }
+
+    public function userVaultSummary(Request $request)
+    {
+        $vault = Vault::select(DB::raw('type_of_metal, SUM(weight) as weight'))
+                        ->groupBy('type_of_metal')
+                        ->get();    
+
+        $vault_item_count = Vault::select(DB::raw('Count(id) as count'))
+                        ->get();   
+
+        $vault_today = Vault::select(DB::raw('type_of_metal, SUM(weight) as weight'))
+                        ->groupBy('type_of_metal')
+                        ->whereDate('created_at', Carbon::today())
+                        ->get();  
+                        
+        //pricing
+                        
+        return response()->json([
+            'vaultTotalSummary' => $vault,
+            'vaultTodaySummary' => $vault_today,
+            'totalVaultItem' => $vault_item_count,
+        ]);
+    }
+
+    public function userVaultHistory(Request $request)
+    {
+        $vault = VaultHistory::all(); 
+
+        return response()->json($vault);
+    }
+    public function modifyDeliveryAdmin(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'status' => 'required',
+        ]);
+
+        if($request->status == 'cancel'){
+            $vault = Vault::find($request->id);
+            $vault->state_status = 'sale_off';
+            $vault->approval_status = 'disapproved';
+            $vault->save();
+        }
+        $data = VaultDelivery::find($request->id);
+        
+        if($data != ''){
+            $data->vault_id = $request->id;
+            $data->status = $request->status;
+            $data->save();  
+        }
+        else{
+            $delivery = new VaultDelivery();
+            $delivery->vault_id = $request->id;
+            $delivery->status = $request->status;
+            $delivery->save();
+        }
+
+        
+        //it can be decline or dispatch
+        Mail::to('monimh786@gmail.com')->send(new VaultDeliveryMail());
+
+        return response()->json(['message' => 'success']);
+
     }
 }
