@@ -16,10 +16,9 @@ use App\Models\User;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::group([
     'prefix' => 'auth'
@@ -31,7 +30,7 @@ Route::group([
      Route::post('reset-password', 'Auth\AuthController@resetPassword')->name('reset-password');  
      //admin
      Route::get('/get-admin-users', 'Auth\AuthController@getAdminUsers')->middleware(['auth:api', 'scopes:manage,transection,vault']);
-     Route::post('/admin-login', 'Auth\AuthController@adminLogin')->name('admin-login');
+     Route::post('/admin-login', 'Auth\AuthController@adminLogin')->name('admin-login')->middleware(['cors']);
      Route::post('admin-register', 'Auth\AuthController@adminRegister')->name('admin-register');
 
      Route::group([
@@ -72,5 +71,11 @@ Route::group(['prefix' => 'users'], function () {
         Route::get('/print-pdf', 'User\UserController@printPDF')->name('print-pdf');
         Route::post('/modify-sale-state-admin', 'User\UserController@modifySaleAdmin')->name('modify-sale-state-admin');
         Route::post('/modify-delivery-state-admin', 'User\UserController@modifyDeliveryAdmin')->name('modify-delivery-state-admin');
+    });
+});
+
+Route::group(['prefix' => 'wallet'], function () {
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('/add-money-to-wallet', 'Wallet\WalletController@addMoneyToWallet')->name('add-money-to-wallet');
     });
 });

@@ -60,11 +60,15 @@ class AuthController extends Controller
    
    public function adminLogin(Request $request) 
    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
+        $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required'
         ]);
-        
+
+        if ($validator->fails()) {
+            return response()->json(['status' => false,'message' => $validator->errors()], 422);
+        }
+
         $admin = AdminUser::where('email', $request->email)->first();
 
         $admin_scopes = DB::table('admin_scopes')
@@ -80,8 +84,6 @@ class AuthController extends Controller
         $scopes = $admin_scopes?$admin_scopes->scope_name: '*';
 
         if(Hash::check($request->password, $admin->password)){
-            // echo "Hello";
-            
 
         $client = new Client();
 
@@ -95,10 +97,19 @@ class AuthController extends Controller
                 'scope' => $scopes,
             ]
         ]);
-        return $response;
+        
+        unset($admin->password); //removing password
+
+        return response()->json([
+                'status' => true,
+                'message' => json_decode($response->getBody()),
+                'profile' => $admin,
+            ], 201);
         }
         else{
-            return 'Email or Password Does not Match!!!';
+            return response()->json([
+                'status' => false,
+            ], 401);
         }
     }
     public function register(Request $request)

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeDefaultTypeToUsersTable extends Migration
+class CreateBanksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class ChangeDefaultTypeToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('status')->default('inactive')->change();
+        Schema::create('banks', function (Blueprint $table) {
+            $table->id();
+            $table->string('bank_name');
+            $table->string('account_number');
+            $table->integer('bank_address');
         });
     }
 
@@ -25,8 +28,6 @@ class ChangeDefaultTypeToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('banks');
     }
 }
