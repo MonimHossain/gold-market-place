@@ -30,7 +30,7 @@ Route::group([
      Route::post('reset-password', 'Auth\AuthController@resetPassword')->name('reset-password');  
      //admin
      Route::get('/get-admin-users', 'Auth\AuthController@getAdminUsers')->middleware(['auth:api', 'scopes:manage,transection,vault']);
-     Route::post('/admin-login', 'Auth\AuthController@adminLogin')->name('admin-login')->middleware(['cors']);
+     Route::post('/admin-login', 'Auth\AuthController@adminLogin')->name('admin-login');
      Route::post('admin-register', 'Auth\AuthController@adminRegister')->name('admin-register');
 
      Route::group([
@@ -77,5 +77,6 @@ Route::group(['prefix' => 'users'], function () {
 Route::group(['prefix' => 'wallet'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/add-money-to-wallet', 'Wallet\WalletController@addMoneyToWallet')->name('add-money-to-wallet');
+        Route::get('/show-wallet-history', 'Wallet\WalletController@showWalletHistory')->name('show-wallet-history');
     });
 });

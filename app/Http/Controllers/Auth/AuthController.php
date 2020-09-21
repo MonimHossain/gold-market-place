@@ -57,17 +57,20 @@ class AuthController extends Controller
         ]);
 
     }
-   
-   public function adminLogin(Request $request) 
-   {
+    public function adminLogin(Request $request) 
+    {
         $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'password' => 'required'
         ]);
-
+        
         if ($validator->fails()) {
-            return response()->json(['status' => false,'message' => $validator->errors()], 422);
+            return response()->json([
+            'status' => false,
+            'message' => $validator->errors(),
+            ], 422);
         }
+
 
         $admin = AdminUser::where('email', $request->email)->first();
 
@@ -164,8 +167,8 @@ class AuthController extends Controller
                 'message' => 'Successfully created admin!'
             ], 201);
     }
-
-    public function scheduleCallTimeForContact(Request $request){
+    public function scheduleCallTimeForContact(Request $request)
+    {
 
         $user = User::find($request->id);
 

@@ -1,0 +1,1 @@
+<p>Your Money has been added to the wallet!</p>
