@@ -124,29 +124,37 @@ class AuthController extends Controller
                     'password' => 'required',
                     'phone' => 'required',
             ]);
+            $data = User::where('email', $request->email)->first();
 
-            $user = new User;
-            $user->first_name = strtolower($request->first_name);
-            $user->last_name = strtolower($request->last_name);
-            $user->email = $request->email;
-            $user->password = bcrypt($request->password);
-            $user->phone = $request->phone;
-            $user->status = 'inactive';
-            if($request->id_no == 'national_id'){
-                $user->national_id = $request->national_id;
-                $user->passport_id = '';
-            }else{
-                $user->passport_id = $request->passport_id;
-                $user->national_id = '';
+            if($data != ''){
+                return response()->json([
+                    'status' => false,
+                ], 409);
             }
+            else{
+                $user = new User;
+                $user->first_name = strtolower($request->first_name);
+                $user->last_name = strtolower($request->last_name);
+                $user->email = $request->email;
+                $user->password = bcrypt($request->password);
+                $user->phone = $request->phone;
+                $user->status = 'inactive';
+                if($request->id_no == 'national_id'){
+                    $user->national_id = $request->national_id;
+                    $user->passport_id = '';
+                }else{
+                    $user->passport_id = $request->passport_id;
+                    $user->national_id = '';
+                }
 
-            $user->save();
+                $user->save();
 
-            Mail::to('monimh786@gmail.com')->send(new RegistrationMail());
+                Mail::to('monimh786@gmail.com')->send(new RegistrationMail());
 
-            return response()->json([
-                'message' => 'Successfully created user!'
-            ], 201);
+                return response()->json([
+                    'message' => 'Successfully created user!'
+                ], 201);
+            }
     }
     public function adminRegister(Request $request)
     {

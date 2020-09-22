@@ -45,12 +45,7 @@ Route::group([
 
 Route::group(['prefix' => 'users'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('/get-users', 'User\UserController@getUsers')->name('get-users');
-        Route::get('/filter-users/{status}', 'User\UserController@filterUsers')->name('filter-users-by-status');
-        Route::get('/search-users', 'User\UserController@searchUsers')->name('search-users');
-        Route::get('/get-details/{name}', 'User\UserController@getUserBySlug')->name('get-details');
-        Route::post('/verify-users', 'User\UserController@verifyUsers')->name('verify-users');
-        Route::post('/delete-users', 'User\UserController@deleteUsers')->name('delete-users');
+        
         Route::post('/mobile-verify', 'User\UserController@verifyPhoneNumber')->name('mobile-verify');
         Route::post('/mail-mobile-code', 'User\UserController@mailMobileCode')->name('mail-mobile-code');
         Route::post('/turn-on-sale-user', 'User\UserController@turnOnSale')->name('turn-on-sale-user');
@@ -59,6 +54,12 @@ Route::group(['prefix' => 'users'], function () {
         Route::get('/user-vault-history', 'User\UserController@userVaultHistory')->name('user-vault-history');
 
         //admin
+        Route::get('/filter-users/{status}', 'User\UserController@filterUsers')->name('filter-users-by-status');
+        Route::get('/search-users', 'User\UserController@searchUsers')->name('search-users');
+        Route::get('/get-details/{name}', 'User\UserController@getUserBySlug')->name('get-details');
+        Route::post('/verify-users', 'User\UserController@verifyUsers')->name('verify-users');
+        Route::post('/delete-users', 'User\UserController@deleteUsers')->name('delete-users');
+        Route::get('/get-users', 'User\UserController@getUsers')->name('get-users');
         Route::post('/create-vault', 'User\UserController@createVault')->name('create-vault');
         Route::get('/get-vault', 'User\UserController@getVault')->name('get-vault');
         Route::delete('delete-vault/{id}', 'User\UserController@deleteVault')->name('delete-vault');
@@ -78,5 +79,6 @@ Route::group(['prefix' => 'wallet'], function () {
     Route::group(['middleware' => 'auth:api'], function () {
         Route::post('/add-money-to-wallet', 'Wallet\WalletController@addMoneyToWallet')->name('add-money-to-wallet');
         Route::get('/show-wallet-history', 'Wallet\WalletController@showWalletHistory')->name('show-wallet-history');
+        Route::get('/download-wallet-invoice', 'Wallet\WalletController@downloadInvoice')->name('download-wallet-invoice');
     });
 });

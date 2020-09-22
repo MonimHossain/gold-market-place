@@ -356,7 +356,7 @@ class UserController extends Controller
               ];
           
           $pdf = PDF::loadView('invoice/vault-create', $data);  
-          return $pdf->download('medium.pdf');
+          return $pdf->download('vault-invoice.pdf');
     }
     public function turnOnSale(Request $request)
     {          
