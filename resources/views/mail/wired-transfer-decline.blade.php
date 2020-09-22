@@ -1,0 +1,1 @@
+<p>Your wired transfer has been declined!</p>

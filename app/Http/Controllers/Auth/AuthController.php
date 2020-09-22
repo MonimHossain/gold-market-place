@@ -24,39 +24,39 @@ use GuzzleHttp\Client;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) 
-    {
-        $request->validate([
-             'email' => 'required|email',
-             'password' => 'required'
-           ]);
+    // public function login(Request $request) 
+    // {
+    //     $request->validate([
+    //          'email' => 'required|email',
+    //          'password' => 'required'
+    //        ]);
 
-        $credentials = request(['email', 'password']);
-        // print_r($credentials);die;
+    //     $credentials = request(['email', 'password']);
+    //     // print_r($credentials);die;
 
-        if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ],401);
+    //     if(!Auth::attempt($credentials))
+    //         return response()->json([
+    //             'message' => 'Unauthorized'
+    //         ],401);
 
-        $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
+    //     $user = $request->user();
+    //     $tokenResult = $user->createToken('Personal Access Token');
+    //     $token = $tokenResult->token;
         
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
+    //     if ($request->remember_me)
+    //         $token->expires_at = Carbon::now()->addWeeks(1);
         
-        $token->save();
+    //     $token->save();
 
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
-        ]);
+    //     return response()->json([
+    //         'access_token' => $tokenResult->accessToken,
+    //         'token_type' => 'Bearer',
+    //         'expires_at' => Carbon::parse(
+    //             $tokenResult->token->expires_at
+    //         )->toDateTimeString()
+    //     ]);
 
-    }
+    // }
     public function adminLogin(Request $request) 
     {
         $validator = Validator::make($request->all(), [
@@ -129,7 +129,8 @@ class AuthController extends Controller
             if($data != ''){
                 return response()->json([
                     'status' => false,
-                ], 409);
+                    'messege' => 'Email already exist', 
+                ]);
             }
             else{
                 $user = new User;
@@ -152,6 +153,7 @@ class AuthController extends Controller
                 Mail::to('monimh786@gmail.com')->send(new RegistrationMail());
 
                 return response()->json([
+                    'status' => true,
                     'message' => 'Successfully created user!'
                 ], 201);
             }

@@ -40,9 +40,9 @@
 		<table id="items">
 		
 		  <tr>
-		      <th>Title</th>
-		      <th>Type</th>
-		      <th>Quantity</th>
+		      <th></th>
+		      <th></th>
+		      <th></th>
 		  </tr>
 		  
 		  <tr class="item-row">

@@ -80,5 +80,12 @@ Route::group(['prefix' => 'wallet'], function () {
         Route::post('/add-money-to-wallet', 'Wallet\WalletController@addMoneyToWallet')->name('add-money-to-wallet');
         Route::get('/show-wallet-history', 'Wallet\WalletController@showWalletHistory')->name('show-wallet-history');
         Route::get('/download-wallet-invoice', 'Wallet\WalletController@downloadInvoice')->name('download-wallet-invoice');
+        Route::post('/withdraw-wallet-money', 'Wallet\WalletController@withDrawWalletMoney')->name('withdraw-wallet-money');
+        Route::post('/edit-bank-info', 'Wallet\WalletController@editBankInfo')->name('edit-bank-info');
+        Route::get('/verify-withdraw-money', 'Wallet\WalletController@verifyWithdrawMoney')->name('verify-withdraw-money');
+        Route::get('/change-wired-transfer-status', 'Wallet\WalletController@changeWiredTransferStatus')->name('change-wired-transfer-status');
+        Route::get('/admin-wired-transfer-history', 'Wallet\WalletController@adminWiredTransferDepositHistory')->name('admin-wired-transfer-history');
+        Route::get('/admin-withdraw-history', 'Wallet\WalletController@adminWithdrawalHistory')->name('admin-withdraw-history');
+        Route::get('/change-wallet-status', 'Wallet\WalletController@changeWalletStatus')->name('change-wallet-status');
     });
 });

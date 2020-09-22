@@ -1,0 +1,1 @@
+<p>Your withdrawal is verified.</p>

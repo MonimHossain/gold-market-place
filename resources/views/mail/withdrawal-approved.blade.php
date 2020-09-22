@@ -1,0 +1,1 @@
+<p>Your withdrawal money is approved!</p>

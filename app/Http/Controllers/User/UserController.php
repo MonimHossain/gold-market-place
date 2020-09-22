@@ -74,6 +74,7 @@ class UserController extends Controller
             Mail::to('monimh786@gmail.com')->send(new VerifyUserMail());
 
         return response()->json([
+            'status' => true,
             'message' => 'Successfully verified the user!'
         ], 201);
     }
@@ -86,11 +87,12 @@ class UserController extends Controller
 
         $user = User::find($request->id);
 
-        $user->status = 'delete';
+        $user->status = 'deleted';
         if($user->save())
             Mail::to('monimh786@gmail.com')->send(new DeleteUserMail());
 
         return response()->json([
+            'status' => true,
             'message' => 'Successfully deleted the user!'
         ], 201);
     }

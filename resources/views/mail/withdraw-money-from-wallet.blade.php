@@ -1,0 +1,1 @@
+<p>Your money has been withdrawed from wallet.</p>
