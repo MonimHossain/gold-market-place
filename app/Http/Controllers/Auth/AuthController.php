@@ -131,6 +131,7 @@ class AuthController extends Controller
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
             $user->phone = $request->phone;
+            $user->status = 'inactive';
             if($request->id_no == 'national_id'){
                 $user->national_id = $request->national_id;
                 $user->passport_id = '';

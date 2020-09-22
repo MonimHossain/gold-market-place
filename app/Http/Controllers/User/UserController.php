@@ -31,7 +31,7 @@ class UserController extends Controller
 {
     public function getUsers(Request $request)
     {
-        $users = User::all();
+        $users = User::where('status', '!=', 'deleted')->get();
         return response()->json($users);
     }
 
