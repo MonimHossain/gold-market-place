@@ -21,6 +21,7 @@ use App\Mail\TurnOnSaleUser;
 use App\Mail\TurnOffSale;
 use App\Mail\VaultDeliveryMail;
 use App\Mail\GetDeliveredUser;
+use App\Models\DropoffAddress;
 use App\Models\Vault;
 use App\Models\VaultHistory;
 use App\Models\VaultDelivery;
@@ -137,8 +138,8 @@ class UserController extends Controller
 
     }
 
-    public function createVault(Request $request){
-        
+    public function createVault(Request $request)
+    {
         $request->validate([
             'title' => 'required',
             'type_of_metal' => 'required',
@@ -147,7 +148,7 @@ class UserController extends Controller
             'weight' => 'required',
             'purity' => 'required',
             'serial_no' => 'required',
-            'filename' => 'required',
+            // 'filename' => 'required',
             'sending_option' => 'required',
             'address' => 'required',
             'city' => 'required',
@@ -185,7 +186,7 @@ class UserController extends Controller
         $vault->weight = $request->weight;
         $vault->purity = $request->purity;
         $vault->serial_no = $request->serial_no;
-        $vault->filename = $file->getClientOriginalName();
+        // $vault->filename = $file->getClientOriginalName();
         $vault->sending_option = $request->sending_option;
         $vault->address = $request->address;
         $vault->city = $request->city;
@@ -198,13 +199,14 @@ class UserController extends Controller
         $vault->currency = $request->currency;
         $vault->description = $request->description ? $request->description : '';
 
-        $fileDestinationPath = 'storage/app/vault/'.$request->user_id.'/';
-        $file->move($fileDestinationPath, $file->getClientOriginalName());
+        // $fileDestinationPath = 'storage/app/vault/'.$request->user_id.'/';
+        // $file->move($fileDestinationPath, $file->getClientOriginalName());
 
         if($vault->save())
             Mail::to('monimh786@gmail.com')->send(new CreateVault());
 
         return response()->json([
+            'status' =>true,
             'message' => 'Successfully created vault !'
         ], 201);
 
@@ -431,24 +433,56 @@ class UserController extends Controller
 
     public function userVaultSummary(Request $request)
     {
-        $vault = Vault::select(DB::raw('type_of_metal, SUM(weight) as weight'))
-                        ->groupBy('type_of_metal')
-                        ->get();    
+        $pending = 0;
+        $disapproved = 0;
+        $approved = 0;
+        $goldWeight = 0;
+        $platinumWeight = 0;
+        $silverWeight = 0;
 
-        $vault_item_count = Vault::select(DB::raw('Count(id) as count'))
+        $vault = Vault::select(DB::raw('approval_status, COUNT(id) as count'))
+                        ->groupBy('approval_status')
                         ->get();   
+                        ;
+        foreach($vault as $val){
+            if($val['approval_status']=='pending')
+            {
+                $pending = $val['count'];
+            }
+            if($val['approval_status']=='disapproved'){
+                $disapproved = $val['count'];
+            }
+            if($val['approval_status']=='approved'){
+                $approved = $val['count'];
+            }
+        }
+        $total = $pending + $disapproved + $approved;
 
-        $vault_today = Vault::select(DB::raw('type_of_metal, SUM(weight) as weight'))
-                        ->groupBy('type_of_metal')
-                        ->whereDate('created_at', Carbon::today())
-                        ->get();  
-                        
-        //pricing
-                        
+        $vaultGoldInformation = Vault::select(DB::raw('type_of_metal, SUM(weight) as weight'))
+                            ->groupBy('type_of_metal')
+                            ->get();  
+              
+        foreach($vaultGoldInformation as $val){
+            if($val['type_of_metal']=='gold'){
+                $goldWeight = $val['weight'];
+            }
+            if($val['type_of_metal']=='platinum'){
+                $platinumWeight = $val['weight'];
+            }
+            if($val['type_of_metal']=='silver'){
+                $silverWeight = $val['weight'];
+            }
+        }
+        $message = "Gold total weight : ".$goldWeight." (gram). Silver total weight : ".$silverWeight." (gram).
+                     Platinum total weight : ".$platinumWeight. " (gram).";
+        
         return response()->json([
-            'vaultTotalSummary' => $vault,
-            'vaultTodaySummary' => $vault_today,
-            'totalVaultItem' => $vault_item_count,
+            'status' => true,
+            'pending' => $pending,
+            'disapproved' => $disapproved,
+            'approved' => $approved,
+            'total_item' => $total,
+            'summary_message' => $message,
         ]);
     }
 
@@ -530,4 +564,10 @@ class UserController extends Controller
                                 'total' => $total,
                             ]);
     }
+    public function dropOffAddress()
+    {
+        $data = DropoffAddress::find(1);
+        return response()->json(['status'=>true,'data' => $data]);
+    }
+    
 }

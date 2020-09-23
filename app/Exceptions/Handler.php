@@ -42,14 +42,14 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        return response()->json(
-            [
-                'errors' => [
-                    'status' => false,
-                    'message' => 'Unauthenticated',
-                ]
-            ], 401
-        );
+        // return response()->json(
+        //     [
+        //         'errors' => [
+        //             'status' => false,
+        //             'message' => 'Unauthenticated',
+        //         ]
+        //     ], 401
+        // );
 
         return parent::render($request, $exception);
     }

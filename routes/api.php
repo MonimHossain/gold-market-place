@@ -72,6 +72,7 @@ Route::group(['prefix' => 'users'], function () {
         Route::post('/modify-sale-state-admin', 'User\UserController@modifySaleAdmin')->name('modify-sale-state-admin');
         Route::post('/modify-delivery-state-admin', 'User\UserController@modifyDeliveryAdmin')->name('modify-delivery-state-admin');
         Route::get('/get-user-summary', 'User\UserController@getUsersSummary')->name('get-user-summary');
+        Route::get('/drop-off-address', 'User\UserController@dropOffAddress')->name('drop-off-address');//manual entry
     });
 });
 
@@ -88,5 +89,9 @@ Route::group(['prefix' => 'wallet'], function () {
         Route::get('/admin-withdraw-history', 'Wallet\WalletController@adminWithdrawalHistory')->name('admin-withdraw-history');
         Route::get('/change-withdraw-status', 'Wallet\WalletController@changeWithdrawStatus')->name('change-withdraw-status');
         Route::get('/user-wallet-details', 'Wallet\WalletController@userWalletDetails')->name('user-wallet-details');
+        Route::get('/get-transactions', 'Wallet\WalletController@getTransactions')->name('get-transactions');
+        Route::get('/search-transactions', 'Wallet\WalletController@searchTransactions')->name('search-transactions');
+        Route::get('/get-wallet-summary', 'Wallet\WalletController@getWalletSummary')->name('get-wallet-summary');
+        Route::get('/get-withdrawal-summary', 'Wallet\WalletController@getWithdrawalSummary')->name('get-withdrawal-summary');
     });
 });

@@ -51,6 +51,7 @@ class WalletController extends Controller
         $wallet->bank_recipt = $file->getClientOriginalName();
         $wallet->date = date('Y-m-d', strtotime($request->date));
         $wallet->bank_id = 1;
+        $wallet->status = 0;
 
         if($wallet->save()){
             Mail::to('monimh786@gmail.com')->send(new AddMoneyWallet());
@@ -120,6 +121,7 @@ class WalletController extends Controller
             $withdraw->type_of_transaction = $request->type;
             $withdraw->bank_id = 1;
             $withdraw->mobile_token = rand(100000,999999);
+            $withdraw->status = 0;
 
 
             if($withdraw->save()){
@@ -292,5 +294,102 @@ class WalletController extends Controller
         {
             return response()->json(['status' => false,'message' => 'No history of this user!']);
         }
+    }
+    public function getTransactions()
+    {
+        $walletData = Wallet::all();
+        $withdrawData = Withdraw::all();
+
+        return response()->json(['status' => true,'deposit' => $walletData, 'withdraw' => $withdrawData]);
+    }
+
+    public function searchTransactions(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'transaction_id' => 'required',
+        ]);
+
+        if ($validator->fails()) 
+        {
+            return response()->json(['status' => false,'message' => $validator->errors()]);
+        }
+        
+        $walletData = Wallet::where('transaction_id',$request->transaction_id)->get();
+        $withdrawData = Withdraw::where('transaction_id',$request->transaction_id)->get();
+
+        return response()->json(['status' => true,'deposit' => $walletData, 'withdraw' => $withdrawData]);
+    }
+
+    public function getWalletSummary()
+    {
+        $pending = 0;
+        $approved = 0;
+        $decline = 0;
+
+        $data = Wallet::select(DB::raw('status, SUM(amount) as sum'))
+                        ->groupBy('status')
+                        ->get(); 
+        
+        foreach($data as $val){
+            if($val['status']==0)
+            {
+                $pending = $val['sum'];
+            }
+            if($val['status']==1){
+                $approved = $val['sum'];
+            }
+            if($val['status']==-1){
+                $decline = $val['sum'];
+            }
+        }
+
+        // $pending = $pending?$pending:0;
+        // $approved = $approved?$approved:0;
+        // $decline = $decline?$decline:0;
+
+        $total = $pending + $approved + $decline;
+
+        return response()->json(['status'=>true,
+                                'pending' => $pending, 
+                                'approved' => $approved, 
+                                'decline' => $decline,
+                                'total' => $total,
+                            ]);
+    }
+
+    public function getWithdrawalSummary()
+    {
+        $pending = 0;
+        $approved = 0;
+        $decline = 0;
+
+        $data = Withdraw::select(DB::raw('status, SUM(amount) as sum'))
+                        ->groupBy('status')
+                        ->get(); 
+        
+        foreach($data as $val){
+            if($val['status']==0)
+            {
+                $pending = $val['sum'];
+            }
+            if($val['status']==1){
+                $approved = $val['sum'];
+            }
+            if($val['status']==-1){
+                $decline = $val['sum'];
+            }
+        }
+        // $pending = $pending?$pending:0;
+        // $approved = $approved?$approved:0;
+        // $decline = $decline?$decline:0;
+
+        $total = $pending + $approved + $decline;
+
+        return response()->json(['status'=>true,
+                                'pending' => $pending, 
+                                'approved' => $approved, 
+                                'decline' => $decline,
+                                'total' => $total,
+                            ]);
     }
 }
