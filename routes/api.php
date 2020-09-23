@@ -1,9 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\AdminUser;
-use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +55,7 @@ Route::group(['prefix' => 'users'], function () {
         Route::get('/search-users', 'User\UserController@searchUsers')->name('search-users');
         Route::get('/get-details/{name}', 'User\UserController@getUserBySlug')->name('get-details');
         Route::post('/verify-users', 'User\UserController@verifyUsers')->name('verify-users');
-        Route::post('/delete-users', 'User\UserController@deleteUsers')->name('delete-users');
+        Route::post('/decline-users', 'User\UserController@declineUsers')->name('decline-users');
         Route::get('/get-users', 'User\UserController@getUsers')->name('get-users');
         Route::post('/create-vault', 'User\UserController@createVault')->name('create-vault');
         Route::get('/get-vault', 'User\UserController@getVault')->name('get-vault');

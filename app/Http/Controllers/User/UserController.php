@@ -79,7 +79,7 @@ class UserController extends Controller
         ], 201);
     }
 
-    public function deleteUsers(Request $request){
+    public function declineUsers(Request $request){
 
         $request->validate([
             'id' => 'required',
@@ -87,7 +87,7 @@ class UserController extends Controller
 
         $user = User::find($request->id);
 
-        $user->status = 'deleted';
+        $user->status = 'declined';
         if($user->save())
             Mail::to('monimh786@gmail.com')->send(new DeleteUserMail());
 

@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use League\OAuth2\Server\Exception\OAuthServerException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -42,9 +43,17 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
+        return response()->json(
+            [
+                'errors' => [
+                    'status' => false,
+                    'message' => 'Unauthenticated',
+                ]
+            ], 401
+        );
+
         return parent::render($request, $exception);
     }
+
+    
 }

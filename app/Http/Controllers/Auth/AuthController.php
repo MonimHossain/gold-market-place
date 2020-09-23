@@ -117,46 +117,61 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
-            $request->validate([
+        $validator = Validator::make($request->all(), [
                     'first_name' => 'required',
                     'last_name' => 'required',
                     'email' => 'required',
                     'password' => 'required',
                     'phone' => 'required',
             ]);
-            $data = User::where('email', $request->email)->first();
 
-            if($data != ''){
+        if ($validator->fails()) {
                 return response()->json([
-                    'status' => false,
-                    'messege' => 'Email already exist', 
-                ]);
+                    'status' => false, 'message' => $validator->errors(),
+                ], 422);
             }
-            else{
-                $user = new User;
-                $user->first_name = strtolower($request->first_name);
-                $user->last_name = strtolower($request->last_name);
-                $user->email = $request->email;
-                $user->password = bcrypt($request->password);
-                $user->phone = $request->phone;
-                $user->status = 'inactive';
-                if($request->id_no == 'national_id'){
-                    $user->national_id = $request->national_id;
-                    $user->passport_id = '';
-                }else{
-                    $user->passport_id = $request->passport_id;
-                    $user->national_id = '';
-                }
 
-                $user->save();
+        $emailData = User::where('email', $request->email)->first();
+        
+        $phoneData = User::where('phone', $request->phone)->first();   
 
-                Mail::to('monimh786@gmail.com')->send(new RegistrationMail());
-
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Successfully created user!'
-                ], 201);
+        if($emailData != ''){
+            return response()->json([
+                'status' => false,
+                'messege' => 'Email already exist', 
+            ]);
+        }
+        else if($phoneData != ''){
+            return response()->json([
+                'status' => false,
+                'messege' => 'Phone Number already exist', 
+            ]);
+        }
+        else{
+            $user = new User;
+            $user->first_name = strtolower($request->first_name);
+            $user->last_name = strtolower($request->last_name);
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->phone = $request->phone;
+            $user->status = 'inactive';
+            if($request->id_no == 'national_id'){
+                $user->national_id = $request->national_id;
+                $user->passport_id = '';
+            }else{
+                $user->passport_id = $request->passport_id;
+                $user->national_id = '';
             }
+
+            $user->save();
+
+            Mail::to('monimh786@gmail.com')->send(new RegistrationMail());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Successfully created user!'
+            ], 201);
+        }
     }
     public function adminRegister(Request $request)
     {
