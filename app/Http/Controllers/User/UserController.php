@@ -375,6 +375,21 @@ class UserController extends Controller
         return response()->json(['message' => 'success']);
     }
 
+    public function turnOffSale(Request $request)
+    {          
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $vault = Vault::find($request->id);
+        $vault->state_status = 'sale_off';
+        if($vault->save()){
+            Mail::to('monimh786@gmail.com')->send(new TurnOffSale());
+        }
+
+        return response()->json(['status'=>true, 'message' => 'success']);
+    }
+
     public function modifySaleAdmin(Request $request)
     {          
         $request->validate([
@@ -384,14 +399,17 @@ class UserController extends Controller
 
         $vault = Vault::find($request->id);
 
-        if($request->status == 'on'){
+        if($request->status == 'on')
+        {
             $vault->state_status = 'sale_on';  
             $vault->save();  
             Mail::to('monimh786@gmail.com')->send(new TurnOnSaleUser());
-        }else{
-            $vault->state_status = 'sale_off';
-            $vault->save();
-            Mail::to('monimh786@gmail.com')->send(new TurnOffSale());
+        }
+        else
+        {
+            // $vault->state_status = 'sale_off';
+            // $vault->save();
+            // Mail::to('monimh786@gmail.com')->send(new TurnOffSale());
         }
         
         return response()->json(['message' => 'success']);
@@ -471,7 +489,45 @@ class UserController extends Controller
         //it can be decline or dispatch
         Mail::to('monimh786@gmail.com')->send(new VaultDeliveryMail());
 
-        return response()->json(['message' => 'success']);
+        return response()->json(['status'=>true,'message' => 'success']);
 
+    }
+    public function getUserProfile(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+        ]);
+        $data = User::where('email', $request->email)->first();
+        if($data != '')
+            return response()->json(['status'=>true,'data' => $data]);
+        else
+            return response()->json(['status'=>false,'message' => 'email is not valid!']);
+    }
+    public function getUsersSummary()
+    {
+        $data = User::select(DB::raw('status, Count(id) as list'))
+                        ->groupBy('status')
+                        ->get(); 
+        
+        foreach($data as $val){
+            if($val['status']=="inactive")
+            {
+                $inactiveUser = $val['list'];
+            }
+            if($val['status']=="active"){
+                $activeUser = $val['list'];
+            }
+            if($val['status']=="declined"){
+                $declineUser = $val['list'];
+            }
+        }
+        $total = $inactiveUser + $activeUser + $declineUser;
+
+        return response()->json(['status'=>true,
+                                'pending' => $inactiveUser, 
+                                'active' => $activeUser, 
+                                'declined' => $declineUser,
+                                'total' => $total,
+                            ]);
     }
 }

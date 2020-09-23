@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use League\OAuth2\Server\Exception\OAuthServerException;
 use Throwable;
 
 class Handler extends ExceptionHandler

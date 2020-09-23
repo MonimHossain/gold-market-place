@@ -46,9 +46,11 @@ Route::group(['prefix' => 'users'], function () {
         Route::post('/mobile-verify', 'User\UserController@verifyPhoneNumber')->name('mobile-verify');
         Route::post('/mail-mobile-code', 'User\UserController@mailMobileCode')->name('mail-mobile-code');
         Route::post('/turn-on-sale-user', 'User\UserController@turnOnSale')->name('turn-on-sale-user');
+        Route::post('/turn-off-sale-user', 'User\UserController@turnOffSale')->name('turn-off-sale-user');
         Route::post('/get-delivered-bullians', 'User\UserController@getDeliveredFromUser')->name('get-delivered-bullians');
         Route::get('/user-vault-summary', 'User\UserController@userVaultSummary')->name('user-vault-summary');
         Route::get('/user-vault-history', 'User\UserController@userVaultHistory')->name('user-vault-history');
+        Route::get('/get-user-profile', 'User\UserController@getUserProfile')->name('get-user-profile');
 
         //admin
         Route::get('/filter-users/{status}', 'User\UserController@filterUsers')->name('filter-users-by-status');
@@ -69,6 +71,7 @@ Route::group(['prefix' => 'users'], function () {
         Route::get('/print-pdf', 'User\UserController@printPDF')->name('print-pdf');
         Route::post('/modify-sale-state-admin', 'User\UserController@modifySaleAdmin')->name('modify-sale-state-admin');
         Route::post('/modify-delivery-state-admin', 'User\UserController@modifyDeliveryAdmin')->name('modify-delivery-state-admin');
+        Route::get('/get-user-summary', 'User\UserController@getUsersSummary')->name('get-user-summary');
     });
 });
 
@@ -83,6 +86,7 @@ Route::group(['prefix' => 'wallet'], function () {
         Route::get('/change-wired-transfer-status', 'Wallet\WalletController@changeWiredTransferStatus')->name('change-wired-transfer-status');
         Route::get('/admin-wired-transfer-history', 'Wallet\WalletController@adminWiredTransferDepositHistory')->name('admin-wired-transfer-history');
         Route::get('/admin-withdraw-history', 'Wallet\WalletController@adminWithdrawalHistory')->name('admin-withdraw-history');
-        Route::get('/change-wallet-status', 'Wallet\WalletController@changeWalletStatus')->name('change-wallet-status');
+        Route::get('/change-withdraw-status', 'Wallet\WalletController@changeWithdrawStatus')->name('change-withdraw-status');
+        Route::get('/user-wallet-details', 'Wallet\WalletController@userWalletDetails')->name('user-wallet-details');
     });
 });

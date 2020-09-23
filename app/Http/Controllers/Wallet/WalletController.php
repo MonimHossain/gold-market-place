@@ -17,6 +17,7 @@ use App\Mail\ApproveWithdrawalMoney;
 use App\Mail\DeclineWithdrawalMoney;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WithdrawMoneyFromWallet;
+use App\Models\TransactionHistory;
 use Illuminate\Support\Facades\Validator;
 
 class WalletController extends Controller
@@ -207,6 +208,14 @@ class WalletController extends Controller
         if($request->status == 1)
         {
             Mail::to('monimh786@gmail.com')->send(new ApproveWiredTransfer());
+            // adding action to the transaction history
+            $transaction = new TransactionHistory;
+            $transaction->transaction_id = $wallet->transaction_id;
+            $transaction->user_id = $wallet->user_id;
+            $transaction->transaction_type = 'wallet';
+            $transaction->date = $wallet->date;
+            $transaction->amount = $wallet->amount;
+            $transaction->save();
             return response()->json(['status' => true,'message' => 'Wired Transfer Approved!']);
         }
         else
@@ -215,15 +224,17 @@ class WalletController extends Controller
             return response()->json(['status' => false,'message' => 'Wired Transfer Decline!']);
         }
     }
-    public function adminWiredTransferDepositHistory(Request $request){
+    public function adminWiredTransferDepositHistory()
+    {
         $data = Wallet::all();
         return response()->json(['status' => true,'data' => $data]);
     }
-    public function adminWithdrawalHistory(Request $request){
+    public function adminWithdrawalHistory()
+    {
         $data = Withdraw::all();
         return response()->json(['status' => true,'data' => $data]);
     }
-    public function changeWalletStatus(Request $request)
+    public function changeWithdrawStatus(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'id' => 'required',
@@ -235,19 +246,51 @@ class WalletController extends Controller
             return response()->json(['status' => false,'message' => $validator->errors()]);
         }
 
-        $wallet = Withdraw::find($request->id);
-        $wallet->status = $request->status;
-        $wallet->save();
+        $withdraw = Withdraw::find($request->id);
+        $withdraw->status = $request->status;
+        $withdraw->save();
 
         if($request->status == 1)
         {
+            
             Mail::to('monimh786@gmail.com')->send(new ApproveWithdrawalMoney());
-            return response()->json(['status' => true,'message' => 'Wired Transfer Approved!']);
+            // adding action to the transaction history
+            $transaction = new TransactionHistory;
+            $transaction->transaction_id = $withdraw->transaction_id;
+            $transaction->user_id = $withdraw->user_id;
+            $transaction->transaction_type = 'withdraw';
+            $transaction->date = date('Y-m-d');
+            $transaction->amount = $withdraw->amount;
+            $transaction->save();
+            
+            return response()->json(['status' => true,'message' => 'Withdrawal Approved!']);
         }
         else
         {
             Mail::to('monimh786@gmail.com')->send(new DeclineWithdrawalMoney());
-            return response()->json(['status' => false,'message' => 'Wired Transfer Decline!']);
+            return response()->json(['status' => false,'message' => 'Withdrawal Decline!']);
+        }
+    }
+    public function userWalletDetails(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+
+        if ($validator->fails()) 
+        {
+            return response()->json(['status' => false,'message' => $validator->errors()]);
+        }
+
+        $data = TransactionHistory::where('user_id', $request->id)->get();
+
+        if($data != '')
+        {
+            return response()->json(['status' => true,'data' => $data]);
+        }
+        else
+        {
+            return response()->json(['status' => false,'message' => 'No history of this user!']);
         }
     }
 }
